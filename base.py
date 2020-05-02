@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 import zlib
 import psycopg2
 import ast
+import time
 from datetime import datetime
 
 class Base(WebSocketClientProtocol):

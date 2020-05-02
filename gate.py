@@ -29,3 +29,5 @@ class Gate(base.Base):
 
 def start():
     base.createConnection("wss://ws.gate.io/v3/", 443, Gate)
+start()
+base.reactor.run()
