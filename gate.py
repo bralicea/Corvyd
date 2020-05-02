@@ -2,6 +2,7 @@ import base
 
 class Gate(base.Base):
 
+    now = base.time.time()
     def onOpen(self):
         params = {
             "id":12312,
@@ -23,11 +24,13 @@ class Gate(base.Base):
 
                 self.insertData(exchange, amount, price, direction, ts)
 
+                # Send ping message to server
+                if base.time.time() - self.now >= 60:
+                    self.sendMessage('{"id":12312, "method":"server.ping", "params":[]}'.encode())
+                    self.now = base.time.time()
+
         except:
             pass
 
-
 def start():
     base.createConnection("wss://ws.gate.io/v3/", 443, Gate)
-start()
-base.reactor.run()

@@ -2,6 +2,7 @@ import base
 
 class Bitforex(base.Base):
 
+    now = base.time.time()
     def onOpen(self):
         params = [{
             "type": "subHq",
@@ -26,15 +27,13 @@ class Bitforex(base.Base):
 
             self.insertData(exchange, amount, price, direction, ts)
 
-            global now
-            if base.time.time() - now >= 60:
+            # Send ping message to server
+            if base.time.time() - self.now >= 60:
                 self.sendMessage("ping_p".encode())
-                now = base.time.time()
+                self.now = base.time.time()
 
         except:
             pass
-
-now = base.time.time()
 
 def start():
     base.createConnection("wss://www.bitforex.com/mkapi/coinGroup1/ws", 443, Bitforex)

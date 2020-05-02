@@ -9,6 +9,7 @@ import zb
 import gate
 import coinex
 import okex
+import bitmex
 
 if __name__ == '__main__':
     bitstamp.start()
@@ -21,5 +22,6 @@ if __name__ == '__main__':
     coinex.start()
     okex.start()
     bitforex.start()
+    bitmex.start()
 
     base.reactor.run()
