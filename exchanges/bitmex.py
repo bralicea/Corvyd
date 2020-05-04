@@ -19,5 +19,5 @@ class Bitmex(base.Base):
         except:
             pass
 
-def start():
-    base.createConnection("wss://www.bitmex.com/realtime?subscribe=trade:XBTUSD", 443, Bitmex)
+    def start():
+        base.createConnection("wss://www.bitmex.com/realtime?subscribe=trade:XBTUSD", 443, Bitmex)

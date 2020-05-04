@@ -1,27 +1,18 @@
 import base
-import bitstamp
-import binance
-import binanceUs
-import bitfinex
-import bitforex
-import biki
-import zb
-import gate
-import coinex
-import okex
-import bitmex
+from exchanges import bitstamp, binance, binanceUs, bitfinex, bitforex, biki, zb, gate, coinex, okex, bitmex
 
 if __name__ == '__main__':
-    bitstamp.start()
-    binance.start()
-    binanceUs.start()
-    bitfinex.start()
-    biki.start()
-    zb.start()
-    gate.start()
-    coinex.start()
-    okex.start()
-    bitforex.start()
-    bitmex.start()
+    bitstamp.Bitstamp.start()
+    binance.Binance.start()
+    binanceUs.BinanceUs.start()
+    bitfinex.Bitfinex.start()
+    biki.Biki.start()
+    zb.Zb.start()
+    gate.Gate.start()
+    coinex.CoinEx.start()
+    okex.Okex.start()
+    bitforex.Bitforex.start()
+    bitmex.Bitmex.start()
+
 
     base.reactor.run()

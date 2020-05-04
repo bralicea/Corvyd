@@ -27,5 +27,5 @@ class Okex(base.Base):
         except:
             pass
 
-def start():
-    base.createConnection("wss://real.okex.com:8443/ws/v3", 8443, Okex)
+    def start():
+        base.createConnection("wss://real.okex.com:8443/ws/v3", 8443, Okex)

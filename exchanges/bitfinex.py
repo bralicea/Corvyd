@@ -29,5 +29,5 @@ class Bitfinex(base.Base):
         except:
             pass
 
-def start():
-    base.createConnection("wss://api-pub.bitfinex.com/ws/2", 443, Bitfinex)
+    def start():
+        base.createConnection("wss://api-pub.bitfinex.com/ws/2", 443, Bitfinex)

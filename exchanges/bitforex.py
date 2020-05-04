@@ -35,5 +35,5 @@ class Bitforex(base.Base):
         except:
             pass
 
-def start():
-    base.createConnection("wss://www.bitforex.com/mkapi/coinGroup1/ws", 443, Bitforex)
+    def start():
+        base.createConnection("wss://www.bitforex.com/mkapi/coinGroup1/ws", 443, Bitforex)

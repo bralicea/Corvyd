@@ -28,5 +28,5 @@ class CoinEx(base.Base):
         except:
             pass
 
-def start():
-    base.createConnection("wss://socket.coinex.com/", 443, CoinEx)
+    def start():
+        base.createConnection("wss://socket.coinex.com/", 443, CoinEx)

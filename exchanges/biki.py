@@ -31,5 +31,5 @@ class Biki(base.Base):
 
                 self.insertData(exchange, amount, price, direction, ts)
 
-def start():
-    base.createConnection("wss://ws.biki.com/kline-api/ws", 443, Biki)
+    def start():
+        base.createConnection("wss://ws.biki.com/kline-api/ws", 443, Biki)

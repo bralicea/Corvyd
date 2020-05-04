@@ -32,5 +32,5 @@ class Gate(base.Base):
         except:
             pass
 
-def start():
-    base.createConnection("wss://ws.gate.io/v3/", 443, Gate)
+    def start():
+        base.createConnection("wss://ws.gate.io/v3/", 443, Gate)

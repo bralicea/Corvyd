@@ -2,6 +2,8 @@ import base
 
 class Zb(base.Base):
 
+    lastDate = ""
+
     def onOpen(self):
         params = {
             "event": "addChannel",
@@ -12,14 +14,13 @@ class Zb(base.Base):
 
     def onMessage(self, payload, isBinary):
         msgList = base.json.loads(payload.decode('utf8'))["data"]
-        global lastDate
         for msg in msgList[::-1]:
-            if msg["date"] == lastDate: # Loop until lastDate to avoid repeats
-                lastDate = msg["date"]
+            if msg["date"] == self.lastDate: # Loop until lastDate to avoid repeats
+                self.lastDate = msg["date"]
                 break
 
             if msg["tid"] == msgList[0]["tid"]: # Last message in msgList[::-1] reached
-                lastDate = msgList[-1]["date"]
+                self.lastDate = msgList[-1]["date"]
 
             else:
                 exchange = self.__class__.__name__
@@ -30,8 +31,5 @@ class Zb(base.Base):
 
                 self.insertData(exchange, amount, price, direction, ts)
 
-
-lastDate = ""
-
-def start():
-    base.createConnection("wss://api.zb.com:9999/websocket", 443, Zb)
+    def start():
+        base.createConnection("wss://api.zb.com:9999/websocket", 443, Zb)

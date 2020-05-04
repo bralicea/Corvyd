@@ -30,5 +30,5 @@ class Bitstamp(base.Base):
         except:
             pass
 
-def start():
-    base.createConnection("wss://ws.bitstamp.net", 443, Bitstamp)
+    def start():
+        base.createConnection("wss://ws.bitstamp.net", 443, Bitstamp)

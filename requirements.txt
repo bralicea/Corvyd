@@ -1,0 +1,5 @@
+autobahn==20.4.3
+twisted==20.3.0
+pyOpenSSL==19.1.0
+service-identity==18.1.0
+psycopg2==2.8.5

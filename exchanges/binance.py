@@ -14,5 +14,5 @@ class Binance(base.Base):
 
         self.insertData(exchange, amount, price, direction, ts)
 
-def start():
-    base.createConnection("wss://stream.binance.com:9443/stream?streams=dogeusdt@trade/dogebtc@trade/btcusdt@trade", 9443, Binance)
+    def start():
+           base.createConnection("wss://stream.binance.com:9443/stream?streams=btcusdt@trade", 9443, Binance)
