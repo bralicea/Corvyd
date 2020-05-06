@@ -14,7 +14,7 @@ from datetime import datetime
 class Base(WebSocketClientProtocol):
 
     # Connect to database
-    conn = psycopg2.connect(database="bitcoin", user='postgres', password='roflmao24', host='localhost', port= '5432')
+    conn = psycopg2.connect(database="postgres", user='bralicea', password='', host='database-1.c8pnybnwk3oh.us-east-2.rds.amazonaws.com', port='5432') # Password omitted
     conn.autocommit = True
     cursor = conn.cursor()
 
