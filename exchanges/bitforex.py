@@ -2,7 +2,9 @@ import base
 
 class Bitforex(base.Base):
 
-    now = base.time.time()
+    def sendPingToServer(self):
+        self.sendMessage("ping_p".encode())
+
     def onOpen(self):
         params = [{
             "type": "subHq",
@@ -14,6 +16,8 @@ class Bitforex(base.Base):
         }]
         subscription = base.json.dumps(params)
         self.sendMessage(subscription.encode('utf8'))
+        heartbeat = base.task.LoopingCall(self.sendPingToServer)
+        heartbeat.start(60)
 
     def onMessage(self, payload, isBinary):
         try:
@@ -26,11 +30,6 @@ class Bitforex(base.Base):
             ts = msg['time']//1000
 
             self.insertData(exchange, amount, price, direction, ts)
-
-            # Send ping message to server
-            if base.time.time() - self.now >= 60:
-                self.sendMessage("ping_p".encode())
-                self.now = base.time.time()
 
         except:
             pass

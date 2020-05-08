@@ -1,7 +1,7 @@
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory
 import sys
 from twisted.python import log
-from twisted.internet import reactor, ssl
+from twisted.internet import reactor, ssl, task
 from twisted.internet.protocol import ReconnectingClientFactory
 import json
 from urllib.parse import urlparse
@@ -14,7 +14,7 @@ from datetime import datetime
 class Base(WebSocketClientProtocol):
 
     # Connect to database
-    conn = psycopg2.connect(database="postgres", user='bralicea', password='', host='database-1.c8pnybnwk3oh.us-east-2.rds.amazonaws.com', port='5432') # Password omitted
+    conn = psycopg2.connect(database="postgres", user='bralicea', password='Roflmao24!', host='database-1.c8pnybnwk3oh.us-east-2.rds.amazonaws.com', port='5432') # Password omitted
     conn.autocommit = True
     cursor = conn.cursor()
 
@@ -64,5 +64,6 @@ def createConnection(streamName, port, exchange): # Create a Twisted factory
     log.startLogging(sys.stdout)
     hostName = urlparse(streamName).hostname
     factory = Connect(streamName)
+    factory.setProtocolOptions(autoPingInterval=60)
     factory.protocol = exchange
     reactor.connectSSL(hostName, port, factory, ssl.ClientContextFactory())

@@ -2,7 +2,9 @@ import base
 
 class Gate(base.Base):
 
-    now = base.time.time()
+    def sendPingToServer(self):
+        self.sendMessage('{"id":12312, "method":"server.ping", "params":[]}'.encode())
+
     def onOpen(self):
         params = {
             "id":12312,
@@ -11,6 +13,8 @@ class Gate(base.Base):
         }
         subscription = base.json.dumps(params)
         self.sendMessage(subscription.encode('utf8'))
+        heartbeat = base.task.LoopingCall(self.sendPingToServer)
+        heartbeat.start(60)
 
     def onMessage(self, payload, isBinary):
         msgList = base.json.loads(payload.decode('utf8'))
@@ -23,11 +27,6 @@ class Gate(base.Base):
                 ts = int(msg['time']//1)
 
                 self.insertData(exchange, amount, price, direction, ts)
-
-                # Send ping message to server
-                if base.time.time() - self.now >= 60:
-                    self.sendMessage('{"id":12312, "method":"server.ping", "params":[]}'.encode())
-                    self.now = base.time.time()
 
         except:
             pass

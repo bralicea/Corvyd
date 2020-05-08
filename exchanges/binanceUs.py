@@ -10,7 +10,7 @@ class BinanceUs(base.Base):
         amount = msg['q']
         price = msg['p']
         direction = self.normalizeDirectionField[msg['m']]
-        ts = msg['T']
+        ts = msg['T']//1000
 
         self.insertData(exchange, amount, price, direction, ts)
 
