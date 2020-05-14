@@ -1,7 +1,7 @@
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory
 import sys
 from twisted.python import log
-from twisted.internet import reactor, ssl, task
+from twisted.internet import reactor, ssl, task, asyncioreactor
 from twisted.internet.protocol import ReconnectingClientFactory
 import json
 from urllib.parse import urlparse
@@ -10,23 +10,12 @@ import psycopg2
 import ast
 import time
 from datetime import datetime
+from kafka import KafkaProducer
+
 
 class Base(WebSocketClientProtocol):
 
-    # Connect to database
-    conn = psycopg2.connect(database="postgres", user='bralicea', password='Roflmao24!', host='database-1.c8pnybnwk3oh.us-east-2.rds.amazonaws.com', port='5432') # Password omitted
-    conn.autocommit = True
-    cursor = conn.cursor()
-
-    # Dictionary meant to normalize data type for the 'direction' field in database
-    normalizeDirectionField = {True: '1', '1': '1', 'buy': '1',
-                               False: '0', '2': '0', 'sell':'0'}
-
-    def insertData(self, exchange, amount, price, direction, ts):
-        sql = '''INSERT into trades (exchange, amount, price, direction, ts) values(%s, %s, %s, %s, %s)''';
-        data = (exchange, amount, price, direction, ts)
-        self.cursor.execute(sql, data)
-        self.conn.commit()
+    producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
     def onConnect(self, response):
         print("Server connected: {0}".format(response.peer))

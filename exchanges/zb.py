@@ -1,8 +1,7 @@
 import base
 
-class Zb(base.Base):
 
-    lastDate = ""
+class Zb(base.Base):
 
     def onOpen(self):
         params = {
@@ -13,23 +12,11 @@ class Zb(base.Base):
         self.sendMessage(subscription.encode('utf8'))
 
     def onMessage(self, payload, isBinary):
-        msgList = base.json.loads(payload.decode('utf8'))["data"]
-        for msg in msgList[::-1]:
-            if msg["date"] == self.lastDate: # Loop until lastDate to avoid repeats
-                self.lastDate = msg["date"]
-                break
+        self.producer.send('zbTrades', payload)
 
-            if msg["tid"] == msgList[0]["tid"]: # Last message in msgList[::-1] reached
-                self.lastDate = msgList[-1]["date"]
 
-            else:
-                exchange = self.__class__.__name__
-                amount = msg['amount']
-                price = msg['price']
-                direction = self.normalizeDirectionField[msg['type']]
-                ts = msg['date']
+def start():
+    base.createConnection("wss://api.zb.com:9999/websocket", 443, Zb)
 
-                self.insertData(exchange, amount, price, direction, ts)
 
-    def start():
-        base.createConnection("wss://api.zb.com:9999/websocket", 443, Zb)
+start()

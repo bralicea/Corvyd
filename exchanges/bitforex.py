@@ -1,5 +1,6 @@
 import base
 
+
 class Bitforex(base.Base):
 
     def sendPingToServer(self):
@@ -20,19 +21,11 @@ class Bitforex(base.Base):
         heartbeat.start(60)
 
     def onMessage(self, payload, isBinary):
-        try:
-            msg = base.json.loads(payload.decode('utf8'))['data'][0]
+        if payload != b'pong_p':
+            self.producer.send('bitforexTrades', payload)
 
-            exchange = self.__class__.__name__
-            amount = msg['amount']
-            price = msg['price']
-            direction = self.normalizeDirectionField[str(msg['direction'])]
-            ts = msg['time']//1000
 
-            self.insertData(exchange, amount, price, direction, ts)
+def start():
+    base.createConnection("wss://www.bitforex.com/mkapi/coinGroup1/ws", 443, Bitforex)
 
-        except:
-            pass
-
-    def start():
-        base.createConnection("wss://www.bitforex.com/mkapi/coinGroup1/ws", 443, Bitforex)
+start()

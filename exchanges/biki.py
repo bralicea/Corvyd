@@ -15,21 +15,18 @@ class Biki(base.Base):
 
     def onMessage(self, payload, isBinary):
         decompressedMsg = base.zlib.decompress(payload, base.zlib.MAX_WBITS|32) # Decompress binary data
-        msgs = base.json.loads(decompressedMsg)
-        try:
-            pingId = msgs['ping']
+        msg = base.json.loads(decompressedMsg)
+        if 'ping' in msg:
+            pingId = msg['ping']
             pongMsg = base.json.dumps({"pong": pingId})
-            self.sendMessage(pongMsg.encode('utf8')) # Pong server with given ID
+            self.sendMessage(pongMsg.encode('utf8'))  # Pong server with given ID
 
-        except:
-            for msg in msgs['tick']['data']:
-                exchange = self.__class__.__name__
-                amount = float(msg['vol'])
-                price = float(msg['price'])
-                direction = self.normalizeDirectionField[msg['side'].lower()]
-                ts = msg['ts']//1000
+        else:
+            self.producer.send('bikiTrades', decompressedMsg)
 
-                self.insertData(exchange, amount, price, direction, ts)
 
-    def start():
-        base.createConnection("wss://ws.biki.com/kline-api/ws", 443, Biki)
+def start():
+    base.createConnection("wss://ws.biki.com/kline-api/ws", 443, Biki)
+
+
+start()
