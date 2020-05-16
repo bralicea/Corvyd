@@ -15,9 +15,9 @@ normalizeDirectionField = {True: '1', '1': '1', 'buy': '1',
 
 
 # Insert data into database
-def insertData(exchange, amount, price, direction, ts):
-    sql = '''INSERT into trades (exchange, amount, price, direction, ts) values(%s, %s, %s, %s, %s)''';
-    data = (exchange, amount, price, direction, ts)
+def insertData(exchange, amount, price, direction, ts, pair):
+    sql = '''INSERT into trades (exchange, amount, price, direction, ts, pair) values(%s, %s, %s, %s, %s, %s)''';
+    data = (exchange, amount, price, direction, ts, pair)
     cursor.execute(sql, data)
     conn.commit()
 
@@ -47,19 +47,19 @@ async def binancetrades(msgs):
         price = msg['p']
         direction = normalizeDirectionField[msg['m']]
         ts = msg['T'] // 1000
-        print(exchange, pair, amount, price, direction, ts)
+        insertData(exchange, amount, price, direction, ts, pair)
 
 @app.agent(binanceUsTrades)
 async def binanceustrades(msgs):
     async for msg in msgs:
         msg = msg['data']
         exchange = 'BinanceUs'
-        pair = msg['s']
+        pair = msg['s'].lower()
         amount = msg['q']
         price = msg['p']
         direction = normalizeDirectionField[msg['m']]
         ts = msg['T'] // 1000
-        print(exchange, pair, amount, price, direction, ts)
+        insertData(exchange, amount, price, direction, ts, pair)
 
 @app.agent(bikiTrades)
 async def bikitrades(msgs):
@@ -72,7 +72,7 @@ async def bikitrades(msgs):
             price = float(msg['tick']['data'][0]['price'])
             direction = normalizeDirectionField[msg['tick']['data'][0]['side'].lower()]
             ts = msg['tick']['data'][0]['ts'] // 1000
-            print(exchange, pair, amount, price, direction, ts)
+            insertData(exchange, amount, price, direction, ts, pair)
 
 @app.agent(bitfinexTrades)
 async def bitfinextrades(msgs):
@@ -87,7 +87,7 @@ async def bitfinextrades(msgs):
             else:
                 direction = "0"
             ts = msg[2][1] // 1000
-            print(exchange, pair, abs(amount), price, direction, ts)
+            insertData(exchange, amount, price, direction, ts, pair)
 
 @app.agent(bitforexTrades)
 async def bitforextrades(msgs):
@@ -99,7 +99,7 @@ async def bitforextrades(msgs):
         price = msg['data'][0]['price']
         direction = normalizeDirectionField[str(msg['data'][0]['direction'])]
         ts = msg['data'][0]['time'] // 1000
-        print(exchange, pair, amount, price, direction, ts)
+        insertData(exchange, amount, price, direction, ts, pair)
 
 @app.agent(bitmexTrades)
 async def bitmextrades(msgs):
@@ -113,7 +113,7 @@ async def bitmextrades(msgs):
             direction = normalizeDirectionField[msg['side'].lower()]
             dt = datetime.strptime(msg['timestamp'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
             ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
-            print(exchange, pair, amount, price, direction, ts)
+            insertData(exchange, amount, price, direction, ts, pair)
 
 @app.agent(bitstampTrades)
 async def bitstamptrades(msgs):
@@ -128,7 +128,7 @@ async def bitstamptrades(msgs):
             else:
                 direction = '0'
             ts = msg['data']['timestamp']
-            print(exchange, pair, amount, price, direction, ts)
+            insertData(exchange, amount, price, direction, ts, pair)
 
 @app.agent(coinexTrades)
 async def coinextrades(msgs):
@@ -141,7 +141,7 @@ async def coinextrades(msgs):
                 price = float(ms['price'])
                 direction = normalizeDirectionField[ms['type']]
                 ts = int(ms['time'] // 1)
-                print(exchange, pair, amount, price, direction, ts)
+                insertData(exchange, amount, price, direction, ts, pair)
 
 @app.agent(gateTrades)
 async def gatetrades(msgs):
@@ -155,7 +155,7 @@ async def gatetrades(msgs):
                 price = float(submsg['price'])
                 direction = normalizeDirectionField[submsg['type']]
                 ts = int(submsg['time'] // 1)
-                print(exchange, pair, amount, price, direction, ts)
+                insertData(exchange, amount, price, direction, ts, pair)
 
 @app.agent(okexTrades)
 async def okextrades(msgs):
@@ -171,7 +171,7 @@ async def okextrades(msgs):
             direction = normalizeDirectionField[msg['side']]
             dt = datetime.strptime(msg['timestamp'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
             ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
-            print(exchange, pair, amount, price, direction, ts)
+            insertData(exchange, amount, price, direction, ts, pair)
 
 @app.agent(zbTrades)
 async def zbtrades(msgs):
@@ -183,7 +183,7 @@ async def zbtrades(msgs):
             price = submsg['price']
             direction = normalizeDirectionField[submsg['type']]
             ts = submsg['date']
-            print(exchange, pair, amount, price, direction, ts)
+            insertData(exchange, amount, price, direction, ts, pair)
 
 if __name__ == '__main__':
     app.main()
