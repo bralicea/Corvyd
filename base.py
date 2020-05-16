@@ -19,6 +19,7 @@ class Base(WebSocketClientProtocol):
 
     def onConnect(self, response):
         print("Server connected: {0}".format(response.peer))
+        self.factory.resetDelay()
 
     def onOpen(self):
         print("WebSocket connection open.")
@@ -36,12 +37,10 @@ class Base(WebSocketClientProtocol):
     def clientConnectionFailed(self, connector, reason):
         print("Client connection failed .. retrying ..")
         self.retry(connector)
-        self.resetDelay()
 
     def clientConnectionLost(self, connector, reason):
         print("Client connection lost .. retrying ..")
         self.retry(connector)
-        self.resetDelay()
 
 
 class Connect(WebSocketClientFactory, ReconnectingClientFactory):

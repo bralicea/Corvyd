@@ -4,7 +4,7 @@ import base
 class Binance(base.Base):
 
     def onMessage(self, payload, isBinary):
-        self.producer.send('binanceTrades0', payload)
+        self.producer.send('binanceTrades', payload)
 
 
 def start():

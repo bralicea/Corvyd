@@ -12,8 +12,7 @@ class Okex(base.Base):
         self.sendMessage(subscription.encode('utf8'))
 
     def onMessage(self, payload, isBinary):
-        decompressedMsg = base.zlib.decompress(payload, -base.zlib.MAX_WBITS|32) # Decompress binary data
-        self.producer.send('okexTrades0', decompressedMsg)
+        self.producer.send('okexTrades', payload)
 
 
 def start():

@@ -1,6 +1,8 @@
 import faust
 import psycopg2
 from datetime import datetime
+import zlib
+import json
 
 # Connect to database
 conn = psycopg2.connect(database="postgres", user='bralicea', password='Roflmao24!', host='database-1.c8pnybnwk3oh.us-east-2.rds.amazonaws.com', port='5432')
@@ -22,16 +24,16 @@ def insertData(exchange, amount, price, direction, ts):
 
 # Start Faust
 app = faust.App('hello-app', broker='kafka://localhost')
-binanceTrades = app.topic('binanceTrades0')
+binanceTrades = app.topic('binanceTrades')
 binanceUsTrades = app.topic('binanceUsTrades')
-bikiTrades = app.topic('bikiTrades')
+bikiTrades = app.topic('bikiTrades', value_serializer='raw')
 bitfinexTrades = app.topic('bitfinexTrades')
 bitforexTrades = app.topic('bitforexTrades')
 bitmexTrades = app.topic('bitmexTrades')
 bitstampTrades = app.topic('bitstampTrades')
 coinexTrades = app.topic('coinexTrades')
 gateTrades = app.topic('gateTrades')
-okexTrades = app.topic('okexTrades0')
+okexTrades = app.topic('okexTrades', value_serializer='raw')
 zbTrades = app.topic('zbTrades')
 
 
@@ -62,13 +64,15 @@ async def binanceustrades(msgs):
 @app.agent(bikiTrades)
 async def bikitrades(msgs):
     async for msg in msgs:
-        exchange = 'Biki'
-        pair = msg['channel'].split('_')[1]
-        amount = float(msg['tick']['data'][0]['vol'])
-        price = float(msg['tick']['data'][0]['price'])
-        direction = normalizeDirectionField[msg['tick']['data'][0]['side'].lower()]
-        ts = msg['tick']['data'][0]['ts'] // 1000
-        print(exchange, pair, amount, price, direction, ts)
+        msg = json.loads(zlib.decompress(msg, zlib.MAX_WBITS | 32))
+        if 'event_rep' in msg:
+            exchange = 'Biki'
+            pair = msg['channel'].split('_')[1]
+            amount = float(msg['tick']['data'][0]['vol'])
+            price = float(msg['tick']['data'][0]['price'])
+            direction = normalizeDirectionField[msg['tick']['data'][0]['side'].lower()]
+            ts = msg['tick']['data'][0]['ts'] // 1000
+            print(exchange, pair, amount, price, direction, ts)
 
 @app.agent(bitfinexTrades)
 async def bitfinextrades(msgs):
@@ -156,6 +160,7 @@ async def gatetrades(msgs):
 @app.agent(okexTrades)
 async def okextrades(msgs):
     async for msg in msgs:
+        msg = json.loads(zlib.decompress(msg, -zlib.MAX_WBITS | 32))
         if 'table' in msg:
             msg = msg['data'][0]
             exchange = 'Okex'

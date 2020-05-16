@@ -4,7 +4,8 @@ import base
 class Gate(base.Base):
 
     def sendPingToServer(self):
-        self.sendMessage('{"id":12312, "method":"server.ping", "params":[]}'.encode())
+        if self.state == 3:
+            self.sendMessage('{"id":12312, "method":"server.ping", "params":[]}'.encode())
 
     def onOpen(self):
         params = {

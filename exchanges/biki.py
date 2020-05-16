@@ -14,15 +14,7 @@ class Biki(base.Base):
         self.sendMessage(subscription.encode('utf8'))
 
     def onMessage(self, payload, isBinary):
-        decompressedMsg = base.zlib.decompress(payload, base.zlib.MAX_WBITS|32) # Decompress binary data
-        msg = base.json.loads(decompressedMsg)
-        if 'ping' in msg:
-            pingId = msg['ping']
-            pongMsg = base.json.dumps({"pong": pingId})
-            self.sendMessage(pongMsg.encode('utf8'))  # Pong server with given ID
-
-        else:
-            self.producer.send('bikiTrades', decompressedMsg)
+        self.producer.send('bikiTrades', payload)
 
 
 def start():

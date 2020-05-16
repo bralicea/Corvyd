@@ -4,7 +4,8 @@ import base
 class Bitforex(base.Base):
 
     def sendPingToServer(self):
-        self.sendMessage("ping_p".encode())
+        if self.state == 3:
+            self.sendMessage("ping_p".encode())
 
     def onOpen(self):
         params = [{
