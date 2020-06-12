@@ -4,6 +4,7 @@ import base
 class Bitforex(base.Base):
 
     def sendPingToServer(self):
+        # Check if websocket connection is open
         if self.state == 3:
             self.sendMessage("ping_p".encode())
 
@@ -28,5 +29,6 @@ class Bitforex(base.Base):
 
 def start():
     base.createConnection("wss://www.bitforex.com/mkapi/coinGroup1/ws", 443, Bitforex)
+
 
 start()

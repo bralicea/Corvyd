@@ -1,5 +1,6 @@
 import base
 
+
 class Bitstamp(base.Base):
 
     def onOpen(self):
