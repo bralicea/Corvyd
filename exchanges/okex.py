@@ -6,7 +6,7 @@ class Okex(base.Base):
     def onOpen(self):
         params = {
             "op": "subscribe",
-            "args": ["spot/trade:BTC-USDT"]
+            "args": base.instruments.instruments['okex']
         }
         subscription = base.json.dumps(params)
         self.sendMessage(subscription.encode('utf8'))
@@ -15,8 +15,4 @@ class Okex(base.Base):
         self.producer.send('okexTrades', payload)
 
 
-def start():
-    base.createConnection("wss://real.okex.com:8443/ws/v3", 8443, Okex)
-
-
-start()
+base.createConnection("wss://real.okex.com:8443/ws/v3", 8443, Okex)

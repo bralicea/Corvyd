@@ -10,11 +10,12 @@ class Gate(base.Base):
     def onOpen(self):
         params = {
             "id":12312,
-            "method":"trades.subscribe",
-            "params":["BTC_USDT"]
+            "method": "trades.subscribe",
+            "params": base.instruments.instruments['gate']
         }
         subscription = base.json.dumps(params)
         self.sendMessage(subscription.encode('utf8'))
+
         heartbeat = base.task.LoopingCall(self.sendPingToServer)
         heartbeat.start(60)
 
@@ -22,8 +23,4 @@ class Gate(base.Base):
         self.producer.send('gateTrades', payload)
 
 
-def start():
-    base.createConnection("wss://ws.gate.io/v3/", 443, Gate)
-
-
-start()
+base.createConnection("wss://ws.gate.io/v3/", 443, Gate)

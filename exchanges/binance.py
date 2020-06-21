@@ -7,8 +7,4 @@ class Binance(base.Base):
         self.producer.send('binanceTrades', payload)
 
 
-def start():
-    base.createConnection("wss://stream.binance.com:9443/stream?streams=btcusdt@trade", 9443, Binance)
-
-
-start()
+base.createConnection("wss://stream.binance.com:9443/stream?streams={}".format(base.instruments.instruments['binance']), 9443, Binance)

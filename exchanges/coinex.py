@@ -6,9 +6,7 @@ class CoinEx(base.Base):
     def onOpen(self):
         params = {
           "method": "deals.subscribe",
-          "params": [
-            "BTCUSDT"
-          ],
+          "params": base.instruments.instruments['coinex'],
           "id": 16
         }
         subscription = base.json.dumps(params)
@@ -18,8 +16,4 @@ class CoinEx(base.Base):
         self.producer.send('coinexTrades', payload)
 
 
-def start():
-    base.createConnection("wss://socket.coinex.com/", 443, CoinEx)
-
-
-start()
+base.createConnection("wss://socket.coinex.com/", 443, CoinEx)

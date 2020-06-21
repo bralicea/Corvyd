@@ -9,16 +9,18 @@ class Bitforex(base.Base):
             self.sendMessage("ping_p".encode())
 
     def onOpen(self):
-        params = [{
-            "type": "subHq",
-            "event": "trade",
-            "param": {
-                "businessType": "coin-usdt-btc",
-                "size": 1
-            }
-        }]
-        subscription = base.json.dumps(params)
-        self.sendMessage(subscription.encode('utf8'))
+        for instrument in base.instruments.instruments['bitforex']:
+            params = [{
+                "type": "subHq",
+                "event": "trade",
+                "param": {
+                    "businessType": "coin-{}".format(instrument),
+                    "size": 1
+                }
+            }]
+            subscription = base.json.dumps(params)
+            self.sendMessage(subscription.encode('utf8'))
+
         heartbeat = base.task.LoopingCall(self.sendPingToServer)
         heartbeat.start(60)
 
@@ -27,8 +29,4 @@ class Bitforex(base.Base):
             self.producer.send('bitforexTrades', payload)
 
 
-def start():
-    base.createConnection("wss://www.bitforex.com/mkapi/coinGroup1/ws", 443, Bitforex)
-
-
-start()
+base.createConnection("wss://www.bitforex.com/mkapi/coinGroup1/ws", 443, Bitforex)

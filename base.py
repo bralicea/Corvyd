@@ -11,6 +11,7 @@ import ast
 import time
 from datetime import datetime
 from kafka import KafkaProducer
+import instruments
 
 
 class Base(WebSocketClientProtocol):

@@ -2,21 +2,50 @@ import base
 
 
 class Bitfinex(base.Base):
+    begin, end = 0, 35
 
     def onOpen(self):
-        params = {
-            'event': 'subscribe',
-            'channel': 'trades',
-            'symbol': 'tBTCUSD'
-        }
-        subscription = base.json.dumps(params)
-        self.sendMessage(subscription.encode('utf8'))
+        for instrument in base.instruments.instruments['bitfinex'][self.begin:self.end]:
+            params = {
+                'event': 'subscribe',
+                'channel': 'trades',
+                'symbol': 't{}'.format(instrument)
+            }
+            subscription = base.json.dumps(params)
+            self.sendMessage(subscription.encode('utf8'))
 
     def onMessage(self, payload, isBinary):
         self.producer.send('bitfinexTrades', payload)
 
 
-def start():
-    base.createConnection("wss://api-pub.bitfinex.com/ws/2", 443, Bitfinex)
+class Bitfinex35(Bitfinex):
+    begin, end = 35, 70
 
-start()
+class Bitfinex70(Bitfinex):
+    begin, end = 70, 105
+
+class Bitfinex105(Bitfinex):
+    begin, end = 105, 140
+
+class Bitfinex140(Bitfinex):
+    begin, end = 140, 175
+
+class Bitfinex175(Bitfinex):
+    begin, end = 175, 210
+
+class Bitfinex210(Bitfinex):
+    begin, end = 210, 245
+
+class Bitfinex245(Bitfinex):
+    begin, end = 245, 272
+
+
+# Multiple connections to bypass rate limits
+base.createConnection("wss://api.bitfinex.com/ws/2", 443, Bitfinex)
+base.createConnection("wss://api.bitfinex.com/ws/2", 443, Bitfinex35)
+base.createConnection("wss://api.bitfinex.com/ws/2", 443, Bitfinex70)
+base.createConnection("wss://api.bitfinex.com/ws/2", 443, Bitfinex105)
+base.createConnection("wss://api.bitfinex.com/ws/2", 443, Bitfinex140)
+base.createConnection("wss://api.bitfinex.com/ws/2", 443, Bitfinex175)
+base.createConnection("wss://api.bitfinex.com/ws/2", 443, Bitfinex210)
+base.createConnection("wss://api.bitfinex.com/ws/2", 443, Bitfinex245)
