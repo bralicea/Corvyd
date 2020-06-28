@@ -4,16 +4,10 @@ from datetime import datetime
 import zlib
 import time
 import json
-import instruments
-
-# Connect to database
-conn = psycopg2.connect(database="postgres", user='bralicea', password='Roflmao24!', host='database-1.c8pnybnwk3oh.us-east-2.rds.amazonaws.com', port='5432')
-conn.autocommit = True
-cursor = conn.cursor()
 
 # Dictionary meant to normalize data type for the 'direction' field in database
-normalizeDirectionField = {False: 'buy', '1': 'buy', 'buy': 'buy',
-                           True: 'sell', '2': 'sell', 'sell': 'sell'}
+normalizeDirectionField = {False: 'buy', '1': 'buy', 'buy': 'buy', 'b': 'buy',
+                           True: 'sell', '2': 'sell', 'sell': 'sell', 's': 'sell'}
 
 
 # Start Faust
@@ -24,23 +18,25 @@ binanceOrderBook = app.topic('binanceOrderBook1')
 binanceUsTrades = app.topic('binanceUsTrades')
 bikiTrades = app.topic('bikiTrades', value_serializer='raw')
 bitfinexTrades = app.topic('bitfinexTrades')
+bitflyerTrades = app.topic('bitflyerTrades')
 bitforexTrades = app.topic('bitforexTrades')
 bitmexTrades = app.topic('bitmexTrades')
 bitstampTrades = app.topic('bitstampTrades')
+coinbaseTrades = app.topic('coinbaseTrades')
 coinexTrades = app.topic('coinexTrades')
 gateTrades = app.topic('gateTrades')
+huobiTrades = app.topic('huobiTrades')
+huobiTrades = app.topic('huobiTrades', value_serializer='raw')
+krakenTrades = app.topic('krakenTrades')
 okexTrades = app.topic('okexTrades', value_serializer='raw')
+phemexTrades = app.topic('phemexTrades')
 zbTrades = app.topic('zbTrades')
 
-# Insert data into database
+# Ingest data from Druid
 @app.agent(ingestData)
 async def ingestdata(dataList):
     async for data in dataList:
         pass
-        #sql = '''INSERT into trades (exchange, amount, price, direction, ts, pair) values(%s, %s, %s, %s, %s, %s)''';
-        #data = (data[0], data[1], data[2], data[3], data[4], data[5])
-        #cursor.execute(sql, data)
-        #conn.commit()
 
 @app.agent(binanceTrades)
 async def binancetrades(msgs):
@@ -96,7 +92,7 @@ async def bitfinextrades(msgs):
 
         elif len(msg) == 3:
             exchange = 'bitfinex'
-            pair = bitfinexId[msg[0]]
+            pair = bitfinexId[msg[0]][1::].lower()
             amount = msg[2][2]
             price = msg[2][3]
             if amount >= 0:
@@ -104,6 +100,20 @@ async def bitfinextrades(msgs):
             else:
                 direction = "sell"
             ts = msg[2][1] // 1000
+            print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+
+@app.agent(bitflyerTrades)
+async def bitflyertrades(msgs):
+    async for msg in msgs:
+        for data in msg['params']['message']:
+            exchange = 'bitflyer'
+            pairFormat = msg['params']['channel'].split('_')
+            pair = (pairFormat[2] + pairFormat[3]).lower()
+            amount = data['size']
+            price = data['price']
+            direction = data['side'].lower()
+            dt = datetime.strptime(data['exec_date'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
+            ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
             print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
 
 @app.agent(bitforexTrades)
@@ -163,6 +173,19 @@ async def coinextrades(msgs):
                 ts = int(ms['time'] // 1)
                 print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
 
+@app.agent(coinbaseTrades)
+async def coinbasetrades(msgs):
+    async for msg in msgs:
+        if msg['type'] == 'match':
+            exchange = 'coinbase'
+            pair = msg['product_id'].lower()
+            amount = msg['size']
+            price = msg['price']
+            direction = msg['side']
+            dt = datetime.strptime(msg['time'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
+            ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
+            print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+
 @app.agent(gateTrades)
 async def gatetrades(msgs):
     async for msg in msgs:
@@ -175,6 +198,35 @@ async def gatetrades(msgs):
                 price = float(submsg['price'])
                 direction = normalizeDirectionField[submsg['type']]
                 ts = int(submsg['time'] // 1)
+                print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+
+@app.agent(huobiTrades)
+async def huobitrades(msgs):
+    async for msg in msgs:
+        msg = json.loads(zlib.decompress(msg, zlib.MAX_WBITS | 32))
+        if 'ch' in msg:
+            for data in msg['tick']['data']:
+                exchange = 'huobi'
+                pair = msg['ch'].split('.')[1]
+                amount = data['amount']
+                price = data['price']
+                direction = data['direction']
+                ts = data['ts']//1000
+                print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+
+@app.agent(krakenTrades)
+async def krakentrades(msgs):
+    async for msg in msgs:
+        if len(msg) == 4 and isinstance(msg, list):
+            for data in msg[1]:
+                exchange = 'kraken'
+                if 'XBT' in msg[3]:
+                    msg[3] = msg[3].replace('XBT', 'BTC')
+                pair = msg[3].replace('/', '').lower()
+                amount = data[1]
+                price = data[0]
+                direction = normalizeDirectionField[data[3]]
+                ts = int(float(data[2])//1)
                 print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
 
 @app.agent(okexTrades)
@@ -192,6 +244,20 @@ async def okextrades(msgs):
             dt = datetime.strptime(msg['timestamp'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
             ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
             print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+
+# Phemex needs to fix their amount and price formats
+@app.agent(phemexTrades)
+async def phemextrades(msgs):
+    async for msg in msgs:
+        if 'sequence' in msg:
+            for data in msg['trades']:
+                exchange = 'phemex'
+                pair = msg['symbol'][1::].lower()
+                amount = data[3]
+                price = data[2]
+                direction = data[1].lower()
+                ts = data[0]//10000
+                print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
 
 @app.agent(zbTrades)
 async def zbtrades(msgs):

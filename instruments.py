@@ -1,31 +1,47 @@
-instruments = {'binance': 'btcusdt@trade/ethusdt@trade/adausdt@trade/linkusdt@trade/ognusdt@trade/xtzusdt@trade/btcbusd@trade/ethbtc@trade/vetusdt@trade/bchusdt@trade/ognbtc@trade/busdusdt@trade/xrpusdt@trade/' \
-                          'bnbusdt@trade/eosusdt@trade/ltcusdt@trade/btcusdc@trade/zilusdt@trade/adabtc@trade/usdcusdt@trade/xvgbtc@trade/erdusdt@trade/bnbbtc@trade/zilbtc@trade/linkbtc@trade/xlmusdt@trade/erdbtc@trade/' \
-                          'iostusdt@trade/ontusdt@trade/scbtc@trade/xrpbtc@trade/etcusdt@trade/zecusdt@trade/rvnbtc@trade/trxusdt@trade/hbarbtc@trade/neousdt@trade/arkbtc@trade/xmrbtc@trade/hbarusdt@trade/xmrusdt@trade/' \
-                          'xtzbtc@trade/paxusdt@trade/fetusdt@trade/algousdt@trade/drepbtc@trade/iostbtc@trade/stormusdt@trade/stormbtc@trade/btctusd@trade/chzbtc@trade/tusdusdt@trade/maticusdt@trade/ltcbtc@trade/btcpax@trade/' \
-                          'vetbtc@trade/rvnusdt@trade/maticbtc@trade/tfuelusdt@trade/lendbtc@trade/enjbtc@trade/batusdt@trade/atomusdt@trade/edobtc@trade/kavausdt@trade/ethusdc@trade/wrxbtc@trade/troybtc@trade/algobtc@trade/' \
-                          'xlmbtc@trade/kncbtc@trade/bchbtc@trade/stratbtc@trade/kavabtc@trade/repbtc@trade/rlcbtc@trade/ontbtc@trade/nanousdt@trade/thetausdt@trade/chzusdt@trade/dashusdt@trade/nanobtc@trade/snmbtc@trade/' \
-                          'aionbtc@trade/loombtc@trade/icxusdt@trade/tfuelbtc@trade/eosbtc@trade/icxbtc@trade/wrxusdt@trade/ethbusd@trade/gobtc@trade/stxbtc@trade/btcngn@trade/fetbtc@trade/ltobtc@trade/bntusdt@trade/' \
-                          'btsbtc@trade/zecbtc@trade/steembtc@trade/lendusdt@trade/bandusdt@trade/blzbtc@trade/thetabtc@trade/brdbtc@trade/enjusdt@trade/bntbtc@trade/tnbbtc@trade/zrxbtc@trade/qtumusdt@trade/chrbtc@trade/' \
-                          'drepusdt@trade/trxbtc@trade/atombtc@trade/stratusdt@trade/erdbnb@trade/renbtc@trade/celrbtc@trade/ctsibtc@trade/rlcusdt@trade/kmdbtc@trade/arpabtc@trade/chrusdt@trade/batbtc@trade/onebtc@trade/' \
-                          'stxusdt@trade/zrxusdt@trade/nknbtc@trade/arpausdt@trade/bttusdt@trade/ognbnb@trade/dockbtc@trade/qkcbtc@trade/grsbtc@trade/ongbtc@trade/polybtc@trade/ankrbtc@trade/iotxbtc@trade/neobtc@trade/' \
-                          'bandbtc@trade/wtcbtc@trade/btsusdt@trade/beambtc@trade/troyusdt@trade/tomobtc@trade/btceur@trade/beamusdt@trade/ongusdt@trade/winusdt@trade/aionusdt@trade/linketh@trade/gasbtc@trade/stptbtc@trade/' \
-                          'agibtc@trade/wavesbtc@trade/rdnbtc@trade/wanbtc@trade/ankrusdt@trade/engbtc@trade/sceth@trade/omgusdt@trade/etcbtc@trade/oneusdt@trade/astbtc@trade/ctsiusdt@trade/renusdt@trade/cosbtc@trade/' \
-                          'mdabtc@trade/iotabtc@trade/elfbtc@trade/storjbtc@trade/nulsbtc@trade/adaeth@trade/cotibtc@trade/nasbtc@trade/qlcbtc@trade/sysbtc@trade/bnbbusd@trade/dashbtc@trade/iotausdt@trade/snglsbtc@trade/' \
-                          'celrusdt@trade/zileth@trade/trxeth@trade/hiveusdt@trade/ftmbtc@trade/bqxbtc@trade/wavesusdt@trade/adxbtc@trade/qspbtc@trade/cvcbtc@trade/qtumbtc@trade/erdbusd@trade/vitebtc@trade/lendeth@trade/' \
-                          'xembtc@trade/iotxusdt@trade/lrcbtc@trade/wabibtc@trade/solbtc@trade/mblusdt@trade/cdtbtc@trade/bnbeth@trade/arnbtc@trade/ambbtc@trade/manabtc@trade/zilbnb@trade/ethtusd@trade/tomousdt@trade/' \
-                          'tntbtc@trade/mcobtc@trade/veteth@trade/mithbtc@trade/nknusdt@trade/omgbtc@trade/xvgeth@trade/nulsusdt@trade/poabtc@trade/cosusdt@trade/cmtbtc@trade/hivebtc@trade/hotusdt@trade/gntbtc@trade/' \
-                          'lskbtc@trade/mdtbtc@trade/stptusdt@trade/mftusdt@trade/bnteth@trade/wanusdt@trade/bchpax@trade/bcdbtc@trade/mtlbtc@trade/databtc@trade/stormeth@trade/mithusdt@trade/btcrub@trade/ftmusdt@trade/' \
-                          'evxbtc@trade/vibbtc@trade/duskbtc@trade/phbbtc@trade/aebtc@trade/appcbtc@trade/busdngn@trade/perlbtc@trade/zilbusd@trade/perlusdt@trade/cvcusdt@trade/usdttry@trade/ostbtc@trade/wtcusdt@trade/' \
-                          'fttbtc@trade/sntbtc@trade/cotiusdt@trade/linkusdc@trade/xrpeth@trade/dockusdt@trade/maticbusd@trade/skybtc@trade/gxsbtc@trade/dogebtc@trade/bchusdc@trade/poebtc@trade/btttrx@trade/adabusd@trade/' \
-                          'edoeth@trade/repeth@trade/eoseth@trade/pptbtc@trade/xzcbtc@trade/ltousdt@trade/bcptbtc@trade/eostusd@trade/tctbtc@trade/viteusdt@trade/bchtusd@trade/scbnb@trade/duskusdt@trade/strateth@trade/' \
-                          'btctry@trade/ardrbtc@trade/brdeth@trade/btgbtc@trade/rlceth@trade/adabnb@trade/usdtrub@trade/xrpbusd@trade/adausdc@trade/dcrbtc@trade/xrpbnb@trade/fuelbtc@trade/dogeusdt@trade/powrbtc@trade/' \
-                          'ethpax@trade/knceth@trade/adatusd@trade/btcidrt@trade/ltcusdc@trade/busdrub@trade/loometh@trade/iosteth@trade/mtlusdt@trade/iotxeth@trade/mdtusdt@trade/mblbtc@trade/eosbnb@trade/xmrbnb@trade/' \
-                          'vetbnb@trade/wrxbnb@trade/enjeth@trade/linkbusd@trade/mcousdt@trade/zenbtc@trade/lrceth@trade/vetbusd@trade/dltbtc@trade/funbtc@trade/datausdt@trade/icxeth@trade/algobusd@trade/arpabnb@trade/' \
-                          'wintrx@trade/xzcusdt@trade/nulseth@trade/brdbnb@trade/gtobtc@trade/navbtc@trade/solbusd@trade/fetbnb@trade/trxbnb@trade/stxbnb@trade/lunbtc@trade/lskusdt@trade/hcbtc@trade/cocosusdt@trade/' \
-                          'bgbpusdc@trade/cndbtc@trade/naseth@trade/oaxbtc@trade/mfteth@trade/kavabnb@trade/xtzbnb@trade/pivxbtc@trade/nanoeth@trade/dntbtc@trade/mblbnb@trade/thetaeth@trade/yoyobtc@trade/osteth@trade/' \
-                          'ardrusdt@trade/xmreth@trade/blzeth@trade/etheur@trade/reqbtc@trade/blzbnb@trade/qspeth@trade/ltceth@trade/gvtbtc@trade/algobnb@trade/wprbtc@trade/etceth@trade/neblbtc@trade/rvnbnb@trade/keyusdt@trade/' \
-                          'hoteth@trade/algotusd@trade/wabibnb@trade/eosusdc@trade/onteth@trade/hbarbnb@trade/bnbusdc@trade/troybnb@trade/tctusdt@trade/hotbtc@trade/zrxeth@trade/viabtc@trade/bchbusd@trade/dentusdt@trade/' \
-                          'fttusdt@trade',
+instruments = {'binance': 'btcusdt@trade/ethusdt@trade/linkusdt@trade/bchusdt@trade/adausdt@trade/ethbtc@trade/xrpusdt@trade/batusdt@trade/xtzusdt@trade/eosusdt@trade/btcbusd@trade/bnbusdt@trade/busdusdt@trade/'
+                          'ltcusdt@trade/vetusdt@trade/zilusdt@trade/ontusdt@trade/etcusdt@trade/lunbtc@trade/zecusdt@trade/bnbbtc@trade/batbtc@trade/btcusdc@trade/linkbtc@trade/ongusdt@trade/xlmusdt@trade/'
+                          'zilbtc@trade/usdcusdt@trade/ongbtc@trade/btgbtc@trade/trxusdt@trade/maticusdt@trade/xrpbtc@trade/adabtc@trade/iostusdt@trade/atomusdt@trade/maticbtc@trade/neousdt@trade/bchbtc@trade/'
+                          'xvgbtc@trade/zecbtc@trade/ontbtc@trade/eosbtc@trade/edobtc@trade/erdbtc@trade/xmrbtc@trade/btcpax@trade/erdusdt@trade/xtzbtc@trade/xmrusdt@trade/paxusdt@trade/bcdbtc@trade/onebtc@trade/'
+                          'solbtc@trade/ethbusd@trade/qtumusdt@trade/rvnbtc@trade/ltcbtc@trade/dashusdt@trade/scbtc@trade/xlmbtc@trade/bateth@trade/zrxusdt@trade/kncbtc@trade/oneusdt@trade/tusdusdt@trade/'
+                          'lendbtc@trade/atombtc@trade/hbarbtc@trade/iostbtc@trade/ethusdc@trade/tnbbtc@trade/btctusd@trade/vetbtc@trade/oaxbtc@trade/nulsbtc@trade/zrxbtc@trade/algousdt@trade/omgusdt@trade/'
+                          'ognusdt@trade/btcngn@trade/tomobtc@trade/reqbtc@trade/hbarusdt@trade/lendusdt@trade/nulsusdt@trade/kavabtc@trade/neobtc@trade/renbtc@trade/thetausdt@trade/ltobtc@trade/tomousdt@trade/'
+                          'dgbbtc@trade/kavausdt@trade/bntusdt@trade/trxbtc@trade/rvnusdt@trade/chrbtc@trade/thetabtc@trade/enjbtc@trade/renusdt@trade/bntbtc@trade/drepbtc@trade/etcbtc@trade/ankrbtc@trade/'
+                          'chrusdt@trade/kncusdt@trade/wrxbtc@trade/ognbtc@trade/wrxusdt@trade/celrbtc@trade/tfuelusdt@trade/ctsibtc@trade/qkcbtc@trade/chzbtc@trade/repbtc@trade/bttusdt@trade/algobtc@trade/'
+                          'iotausdt@trade/ethzar@trade/gasbtc@trade/cotibtc@trade/dashbtc@trade/winusdt@trade/gobtc@trade/omgbtc@trade/zileth@trade/nknbtc@trade/enjusdt@trade/qtumbtc@trade/ctxcusdt@trade/'
+                          'ctxcbtc@trade/beamusdt@trade/ethpax@trade/celrusdt@trade/icxusdt@trade/nanousdt@trade/ankrusdt@trade/ctsiusdt@trade/solbusd@trade/qlcbtc@trade/iotxbtc@trade/bandusdt@trade/nasbtc@trade/'
+                          'ethtusd@trade/aionusdt@trade/iotabtc@trade/rlcbtc@trade/tfuelbtc@trade/cotiusdt@trade/nanobtc@trade/loombtc@trade/beambtc@trade/drepusdt@trade/arnbtc@trade/manabtc@trade/chzusdt@trade/'
+                          'gvtbtc@trade/linketh@trade/adaeth@trade/aionbtc@trade/zilbusd@trade/eostusd@trade/bnbbusd@trade/icxbtc@trade/eoseth@trade/blzbtc@trade/trxeth@trade/btceur@trade/iotxusdt@trade/'
+                          'troybtc@trade/nknusdt@trade/mdtbtc@trade/bandbtc@trade/mcobtc@trade/lendeth@trade/busdngn@trade/xrpeth@trade/phbbtc@trade/polybtc@trade/bnbeth@trade/viabtc@trade/arkbtc@trade/zilbnb@trade/'
+                          'perlusdt@trade/kmdbtc@trade/mblusdt@trade/steembtc@trade/maticbusd@trade/fetusdt@trade/edoeth@trade/rlcusdt@trade/wabibtc@trade/brdbtc@trade/usdttry@trade/trxbnb@trade/rdnbtc@trade/'
+                          'engbtc@trade/fttbtc@trade/dogeusdt@trade/btttrx@trade/vibbtc@trade/mdabtc@trade/hiveusdt@trade/fetbtc@trade/btsbtc@trade/appcbtc@trade/erdbnb@trade/stratbtc@trade/lrcbtc@trade/'
+                          'hotusdt@trade/ambbtc@trade/bchbusd@trade/xrpbusd@trade/skybtc@trade/elfbtc@trade/batbusd@trade/wavesbtc@trade/qspbtc@trade/pptbtc@trade/storjbtc@trade/gntbtc@trade/ftmbtc@trade/'
+                          'cmtbtc@trade/adabusd@trade/xrpbnb@trade/funbtc@trade/btctry@trade/zenbtc@trade/cosbtc@trade/veteth@trade/stmxbtc@trade/bchpax@trade/mblbtc@trade/linkusdc@trade/iqbusd@trade/bqxbtc@trade/'
+                          'stmxusdt@trade/perlbtc@trade/bchtusd@trade/ltousdt@trade/hivebtc@trade/dogebtc@trade/xembtc@trade/xvgeth@trade/astbtc@trade/sceth@trade/wanbtc@trade/cosusdt@trade/linkbusd@trade/'
+                          'wtcbtc@trade/wavesusdt@trade/snglsbtc@trade/batbnb@trade/agibtc@trade/databtc@trade/bchusdc@trade/evxbtc@trade/solbnb@trade/stxbtc@trade/batusdc@trade/cdtbtc@trade/arpausdt@trade/'
+                          'dockbtc@trade/cvcbtc@trade/fuelbtc@trade/btsusdt@trade/eosbusd@trade/dltbtc@trade/mcousdt@trade/wanusdt@trade/knceth@trade/ltceth@trade/ftmusdt@trade/troyusdt@trade/arpabtc@trade/'
+                          'lskbtc@trade/wintrx@trade/iotxeth@trade/powrbtc@trade/usdtrub@trade/grsbtc@trade/tctbtc@trade/bchbnb@trade/btcrub@trade/hotbtc@trade/keyusdt@trade/adausdc@trade/xzcbtc@trade/gxsbtc@trade/'
+                          'mtlbtc@trade/dgbbusd@trade/pivxbtc@trade/stratusdt@trade/etheur@trade/tntbtc@trade/maticbnb@trade/adxbtc@trade/vibebtc@trade/stxusdt@trade/navbtc@trade/sysbtc@trade/dcrbtc@trade/'
+                          'bnbusdc@trade/mdtusdt@trade/zeceth@trade/mithbtc@trade/qspeth@trade/onebnb@trade/neoeth@trade/cocosusdt@trade/funusdt@trade/aebtc@trade/sntbtc@trade/stptusdt@trade/xmreth@trade/'
+                          'adatusd@trade/dockusdt@trade/neblbtc@trade/ethrub@trade/eosusdc@trade/zecbusd@trade/ltcbusd@trade/ltcusdc@trade/fttbnb@trade/duskbtc@trade/datausdt@trade/mblbnb@trade/rcnbtc@trade/'
+                          'vetbusd@trade/poebtc@trade/scbnb@trade/npxsusdt@trade/wabibnb@trade/duskusdt@trade/bnteth@trade/ltcbnb@trade/xrpusdc@trade/naseth@trade/ardrbtc@trade/linktusd@trade/bcptbtc@trade/'
+                          'dgbbnb@trade/erdbusd@trade/elfeth@trade/ontbusd@trade/vitebtc@trade/gtobtc@trade/mithusdt@trade/nulseth@trade/mcoeth@trade/bttbnb@trade/xmrbnb@trade/xlmeth@trade/algotusd@trade/'
+                          'eosbnb@trade/arpabnb@trade/fttusdt@trade/adabnb@trade/winbnb@trade/dntbtc@trade/omgeth@trade/onteth@trade/zectusd@trade/xtzbnb@trade/tomobusd@trade/snmbtc@trade/hcbtc@trade/poabtc@trade/'
+                          'tomobnb@trade/thetaeth@trade/bttbusd@trade/nxsbtc@trade/repeth@trade/btcidrt@trade/etcbusd@trade/trxusdc@trade/etceth@trade/cvcusdt@trade/xtzbusd@trade/wtcusdt@trade/xzcusdt@trade/'
+                          'npxseth@trade/thetabnb@trade/cdteth@trade/mthbtc@trade/celrbnb@trade/yoyobtc@trade/enjeth@trade/mftusdt@trade/algobnb@trade/xrptusd@trade/evxeth@trade/gtousdt@trade/mtlusdt@trade/'
+                          'xlmbusd@trade/hoteth@trade/trxtusd@trade/qlceth@trade/nknbnb@trade/rlceth@trade/stmxeth@trade/nanoeth@trade/hbarbnb@trade/blzbnb@trade/wrxbnb@trade/iosteth@trade/trxxrp@trade/'
+                          'lskusdt@trade/ltctusd@trade/atombnb@trade/manaeth@trade/blzeth@trade/tctusdt@trade/vibeth@trade/ctsibnb@trade/stptbtc@trade/hbarbusd@trade/dentusdt@trade/trxbusd@trade/ardrusdt@trade/'
+                          'cndbtc@trade/zrxeth@trade/snteth@trade/ltcpax@trade/bntbusd@trade/aioneth@trade/vetbnb@trade/ognbnb@trade/viteusdt@trade/algobusd@trade/brdeth@trade/mdtbnb@trade/mithbnb@trade/'
+                          'bandbnb@trade/btttusd@trade/ankrbnb@trade/bcdeth@trade/bgbpusdc@trade/hcusdt@trade/xmrbusd@trade/nebleth@trade/ostbtc@trade/dasheth@trade/iotaeth@trade/chrbnb@trade/rdneth@trade/'
+                          'denteth@trade/qkceth@trade/loometh@trade/bnbpax@trade/nanobusd@trade/wprbtc@trade/brdbnb@trade/zenbnb@trade/lrceth@trade/trxpax@trade/qtumbusd@trade/ppteth@trade/waneth@trade/'
+                          'gnteth@trade/busdtry@trade/usdcpax@trade/hotbnb@trade/xrppax@trade/zeneth@trade/winusdc@trade/phbtusd@trade/neobnb@trade/cotibnb@trade/rvnbnb@trade/xlmbnb@trade/wtceth@trade/'
+                          'rvnbusd@trade/kavabnb@trade/bnbtry@trade/waveseth@trade/cmteth@trade/neobusd@trade/ontbnb@trade/strateth@trade/keyeth@trade/powreth@trade/bnbtusd@trade/neblbnb@trade/qtumeth@trade/'
+                          'zecusdc@trade/docketh@trade/perlbnb@trade/bnbngn@trade/usdtidrt@trade/adxeth@trade/lsketh@trade/bnbidrt@trade/funeth@trade/bttusdc@trade/dataeth@trade/enjbusd@trade/chzbnb@trade/'
+                          'iqbnb@trade/engeth@trade/bqxeth@trade/dashbusd@trade/stxbnb@trade/iostbnb@trade/zrxbnb@trade/usdctusd@trade/zecbnb@trade/wrxbusd@trade/mfteth@trade/pivxeth@trade/etcbnb@trade/'
+                          'wanbnb@trade/icxeth@trade/databusd@trade/grseth@trade/eospax@trade/xrptry@trade/wtcbnb@trade/wavesusdc@trade/gvteth@trade/stratbusd@trade/iotabnb@trade/steembnb@trade/steemeth@trade/'
+                          'icxbnb@trade/kmdeth@trade/rlcbnb@trade/neotusd@trade/xzceth@trade/troybnb@trade/oneusdc@trade/storjeth@trade/fetbnb@trade/ftmbnb@trade/beambnb@trade/arneth@trade/btczar@trade/'
+                          'ctsibusd@trade/hivebnb@trade/stptbnb@trade/hceth@trade/aionbnb@trade/ethtry@trade/mftbnb@trade/dashbnb@trade/neousdc@trade/xrprub@trade/gxseth@trade/cocosbnb@trade/cvceth@trade/'
+                          'xrpeur@trade/icxbusd@trade/bttpax@trade/cosbnb@trade/ncasheth@trade/gtoeth@trade/tnteth@trade/ltobnb@trade/aionbusd@trade/enjbnb@trade/btsbusd@trade/aeeth@trade/xzcbnb@trade/renbnb@trade/'
+                          'wavesbnb@trade/wavesbusd@trade/usdtzar@trade/usdsusdt@trade/algopax@trade/gtobnb@trade/mtleth@trade/xemeth@trade/osteth@trade/bnbeur@trade/busdrub@trade/bnbrub@trade',
 
                'binanceus': 'btcusd@trade/adausd@trade/zilusd@trade/vetusd@trade/usdtusd@trade/ethusd@trade/btcusdt@trade/linkusd@trade/xrpusd@trade/btcbusd@trade/nanousd@trade/enjusd@trade/vetusdt@trade/' \
                             'hbarusd@trade/adausdt@trade/algousd@trade/xtzusd@trade/rvnusd@trade/bnbusd@trade/busdusd@trade/ethusdt@trade/adabtc@trade/zilbusd@trade/icxusd@trade/zrxusd@trade/xlmusd@trade/' \
@@ -50,6 +66,8 @@ instruments = {'binance': 'btcusdt@trade/ethusdt@trade/adausdt@trade/linkusdt@tr
                             'NECBTC', 'BOXUSD', 'ASTUSD', 'RIFUSD', 'SEERUSD', 'STORJUSD', 'POLYUSD', 'RCNUSD', 'SANBTC', 'HOTUSD', 'TRIOUSD', 'ATOBTC', 'SNTUSD', 'GNOUSD', 'GOTUSD', 'ODEETH', 'MANUSD', 'XLMETH',
                             'DRGNUSD', 'DTUSD', 'OKBBTC', 'ATMIUSD', 'BATETH', 'CNDETH', 'XLMGBP', 'ATOETH', 'TKNUSD', 'INTUSD', 'USDKUSDt', 'LYMUSD', 'USDKETH', 'NCASHUSD', 'POAUSD', 'USDKBTC', 'SWMUSD',
                             'USDKUSD', 'USDKEOS', 'KANUSD', 'YEEDUSD', 'RTEUSD', 'ZBTUSD', 'GOTEUR'],
+
+               'bitflyer': ['BTC_JPY', 'ETH_JPY', 'BTC_USD', 'BTC_EUR', 'ETH_BTC'],
 
                'bitforex': ['usdt-btc', 'usdt-ltc', 'usdt-eth', 'eth-xlm', 'usdt-neo', 'usdt-xlm', 'usdt-bch', 'usdt-fil', 'btc-eth', 'btc-eos', 'eth-beam', 'usdt-bsv', 'btc-atom', 'eth-yo', 'btc-link', 'eth-cnrg',
                             'btc-xlm', 'usdt-dash', 'btc-xzc', 'btc-yo', 'btc-dash', 'usdt-gusd', 'btc-xtz', 'btc-bsv', 'usdt-beam', 'btc-eved', 'btc-xrp', 'btc-bch', 'btc-trx', 'btc-kicks', 'usdt-dot', 'eth-dash',
@@ -78,6 +96,12 @@ instruments = {'binance': 'btcusdt@trade/ethusdt@trade/adausdt@trade/linkusdt@tr
 
                'bitstamp': ['btcusd', 'xrpusd', 'btceur', 'ethusd', 'etheur', 'bchusd', 'ltcusd', 'xrpeur', 'btcgbp', 'ethbtc', 'bcheur', 'xlmbtc', 'ltceur', 'xlmeur', 'xrpbtc', 'ltcbtc', 'bchbtc', 'xlmusd',
                             'ethgbp', 'xrpgbp', 'ltcgbp', 'xlmgbp', 'paxusd', 'bchgbp', 'btcpax', 'ethpax', 'paxeur', 'paxgbp', 'xrppax'],
+
+               'coinbase': ['BTC-USD', 'ETH-USD', 'BTC-EUR', 'LINK-USD', 'BTC-GBP', 'KNC-USD', 'XRP-USD', 'OMG-USD', 'ETH-EUR', 'ETH-BTC', 'BCH-USD', 'BTC-USDC', 'LTC-USD', 'OXT-USD', 'XTZ-USD', 'ETH-USDC',
+                            'BAT-USDC', 'MKR-USD', 'ZRX-USD', 'XLM-USD', 'REP-USD', 'ETH-GBP', 'OMG-EUR', 'EOS-USD', 'KNC-BTC', 'XRP-EUR', 'ETC-USD', 'OMG-GBP', 'XRP-BTC', 'OMG-BTC', 'ZRX-BTC', 'ALGO-USD',
+                            'DAI-USD', 'LINK-ETH', 'MKR-BTC', 'ATOM-USD', 'XTZ-BTC', 'DAI-USDC', 'BCH-BTC', 'ZRX-EUR', 'ZEC-USDC', 'BAT-ETH', 'LTC-BTC', 'BCH-EUR', 'ATOM-BTC', 'LTC-EUR', 'LTC-GBP', 'XLM-BTC',
+                            'DASH-USD', 'REP-BTC', 'ETH-DAI', 'XLM-EUR', 'EOS-BTC', 'EOS-EUR', 'BCH-GBP', 'ZEC-BTC', 'ETC-EUR', 'ETC-GBP', 'ETC-BTC', 'DASH-BTC', 'GNT-USDC', 'CVC-USDC', 'MANA-USDC', 'LOOM-USDC',
+                            'DNT-USDC'],
 
                'coinex': ['BTCUSDT', 'BSVBTC', 'ETHBTC', 'BSVUSDT', 'BCHBTC', 'ETHUSDT', 'ETCBTC', 'BSVBCH', 'BCHUSDT', 'ETHBCH', 'ETCUSDT', 'ETCBCH', 'BTCUSDC', 'EOSBTC', 'LTCUSDT', 'BTCPAX', 'DASHBTC',
                           'BTCTUSD', 'XRPUSDT', 'LTCBTC', 'EOSUSDT', 'ATOMBTC', 'ZECUSDT', 'EOSETH', 'XMRUSDT', 'ZECBTC', 'DASHBCH', 'TRXBTC', 'DASHUSDT', 'EOSBCH', 'XRPBTC', 'TRXUSDT', 'BATBTC', 'NEOUSDT',
@@ -124,6 +148,50 @@ instruments = {'binance': 'btcusdt@trade/ethusdt@trade/adausdt@trade/linkusdt@tr
                         'BTG_BTC', 'OAX_ETH', 'SWTH_ETH', 'DNT_ETH', 'INK_BTC', 'BXC_ETH', 'RUFF_BTC', 'GOD_BTC', 'MKR_ETH', 'ARN_ETH', 'MTN_ETH', 'DDD_BTC', 'OST_USDT', 'LUN_USDT', 'SMT_ETH', 'FUN_ETH', 'PAY_ETH',
                         'ARPA_ETH', 'BIFI_BTC', 'RED_ETH', 'OST_ETH', 'LUN_ETH', 'FUN_USDT', 'MET_ETH', 'LBA_ETH', 'BFT_USDT', 'MDS_ETH', 'STX_USDT', 'PAY_BTC', 'BFT_ETH', 'STX_ETH', 'NBOT_ETH', 'SOUL_USDT',
                         'DOCK_ETH', 'ELEC_ETH', 'BNTY_ETH', 'CELR_ETH', 'SOUL_ETH', 'DADI_ETH', 'REQ_ETH', 'ZPT_ETH', 'TSL_QTUM'],
+
+               'huobi': ['btcusd', 'ethusd', 'btcusdt', 'bsvusd', 'ethusdt', 'bchusd', 'bsvusdt', 'eosusdt', 'bchusdt', 'ltcusdt', 'xrpusdt', 'adausdt', 'ethbtc', 'aacbtc', 'zecusdt', 'etcusdt', 'htusdt',
+                         'linkusdt', 'dacbtc', 'usdthusd', 'kcashbtc', 'ttusdt', 'kcasheth', 'bsvbtc', 'trxusdt', 'kcashht', 'zilusdt', 'crobtc', 'eosbtc', 'bchbtc', 'yeebtc', 'cvntbtc', 'ontusdt', 'crousdt',
+                         'emusdt', 'actusdt', 'croht', 'iostusdt', 'atomusdt', 'dashusdt', 'xtzusdt', 'xrpbtc', 'xlmusdt', 'rsrusdt', 'btchusd', 'ltcbtc', 'letusdt', 'qtumusdt', 'htbtc', 'omgusdt', 'cvnteth',
+                         'neousdt', 'batusdt', 'neobtc', 'etcbtc', 'thetausdt', 'xmrbtc', 'xmrusdt', 'eoseth', 'letbtc', 'vetusdt', 'zilbtc', 'nexobtc', 'hiveusdt', 'nexoeth', 'algousdt', 'lambusdt', 'nodeusdt',
+                         'xmxbtc', 'zecbtc', 'bchht', 'vsysusdt', 'ognusdt', 'nulsusdt', 'batbtc', 'ctxcusdt', 'storjusdt', 'elausdt', 'linkbtc', 'ctxceth', 'renusdt', 'bhdusdt', 'covabtc', 'steemusdt', 'rsrbtc',
+                         'hteth', 'socusdt', 'hcusdt', 'adabtc', 'vetbtc', 'btmusdt', 'nasusdt', 'irisbtc', 'zrxusdt', 'trxbtc', 'bttusdt', 'xtzbtc', 'ethhusd', 'kncbtc', 'mdsusdt', 'actbtc', 'mcobtc', 'mxusdt',
+                         'elfusdt', 'xlmbtc', 'eoshusd', 'topusdt', 'dtausdt', 'bixusdt', 'btsusdt', 'embtc', 'aeusdt', 'hptusdt', 'cmtusdt', 'wiccusdt', 'forusdt', 'irisusdt', 'atpusdt', 'hivebtc', 'hotbtc',
+                         'chateth', 'linketh', 'smtusdt', 'ektusdt', 'vidyusdt', 'iostbtc', 'mxcbtc', 'propybtc', 'nknusdt', 'covaeth', 'creusdt', 'tnbbtc', 'fsnusdt', 'vsysbtc', 'atombtc', 'ontbtc', 'renbtc',
+                         'paiusdt', 'dashbtc', 'iotausdt', 'usdchusd', 'hptht', 'bcvbtc', 'reqbtc', 'bcdbtc', 'lolusdt', 'bsvhusd', 'iicbtc', 'uuuusdt', 'ltcht', 'xmxeth', 'sncbtc', 'lbausdt', 'trxeth', 'ctxcbtc',
+                         'waxpbtc', 'ftibtc', 'kanusdt', 'ckbusdt', 'cvcusdt', 'elabtc', 'boxbtc', 'xzcusdt', 'xvgbtc', 'itcusdt', 'newusdt', 'xrpht', 'dogeusdt', 'uipusdt', 'bchhusd', 'socbtc', 'gxcusdt',
+                         'ruffusdt', 'thetabtc', 'ogousdt', 'qtumeth', 'omgbtc', 'btgbtc', 'zrxbtc', 'hptbtc', 'ftieth', 'gnxbtc', 'stkbtc', 'gtusdt', 'manausdt', 'bhtusdt', 'nulsbtc', 'hthusd', 'eosht', 'xemusdt',
+                         'arpausdt', 'egccbtc', 'rtebtc', 'sntusdt', 'daceth', 'adaeth', 'scbtc', 'reneth', 'paxhusd', 'ognbtc', 'hoteth', 'zileth', 'akrousdt', 'aaceth', 'steembtc', 'oneusdt', 'aidocbtc',
+                         'ltchusd', 'algobtc', 'gntusdt', 'wavesusdt', 'dashht', 'wtcusdt', 'engeth', 'hcbtc', 'wanbtc', 'snceth', 'dcrusdt', 'blzbtc', 'gasbtc', 'icxbtc', 'nasbtc', 'iiceth', 'dtabtc', 'yccbtc',
+                         'egtusdt', 'kanbtc', 'nknbtc', 'btmbtc', 'iosteth', 'qtumbtc', 'utkbtc', 'ycceth', 'lxtusdt', 'dbcbtc', 'zenbtc', 'storjbtc', 'nanobtc', 'kaneth', 'mteth', 'cvcoineth', 'xrphusd',
+                         'knceth', 'rteeth', 'ckbbtc', 'lambbtc', 'hitusdt', 'fairbtc', 'onteth', 'uceth', 'ucbtc', 'iostht', 'etchusd', 'cvcoinbtc', 'itcbtc', 'manabtc', 'wxtusdt', 'zechusd', 'nanousdt',
+                         'lymbtc', 'mtbtc', 'skmusdt', 'atometh', 'ttht', 'lambeth', 'yeeeth', 'lbabtc', 'btttrx', 'etcht', 'soceth', 'aebtc', 'xzcbtc', 'dgbbtc', 'cmtbtc', 'pvtusdt', 'iotabtc', 'paibtc',
+                         'datxbtc', 'xtzeth', 'uuubtc', 'qunbtc', 'btsbtc', 'triobtc', 'dogebtc', 'bixbtc', 'swftcbtc', 'sceth', 'butbtc', 'nodebtc', 'veteth', 'forbtc', 'quneth', 'thetaeth', 'bcveth', 'crebtc',
+                         'ttbtc', 'fsnbtc', 'rsrht', 'elfbtc', 'fttusdt', 'cnnsusdt', 'ogobtc', 'ocnusdt', 'sspeth', 'kmdbtc', 'wavesbtc', 'xmreth', 'propyeth', 'npxsbtc', 'xvgeth', 'dtaeth', 'stketh', 'btteth',
+                         'btmeth', 'adahusd', 'gxcbtc', 'bateth', 'tnbeth', 'xlmeth', 'leteth', 'shebtc', 'tusdhusd', 'reqeth', 'gnxeth', 'bttbtc', 'mxbtc', 'sntbtc', 'nknht', 'aidoceth', 'dcrbtc', 'manbtc',
+                         'elfeth', 'cnnbtc', 'loombtc', 'cmteth', 'wiccbtc', 'egcceth', 'waneth', 'bhtbtc', 'cvcbtc', 'chatbtc', 'nulseth', 'lbaeth', 'gntbtc', 'omgeth', 'etnbtc', 'atpbtc', 'idtbtc', 'buteth',
+                         'waxpeth', 'zeneth', 'bhdbtc', 'pcbtc', 'lskbtc', 'xlmhusd', 'wtcbtc', 'dashhusd', 'paybtc', 'ekteth', 'boxeth', 'dockusdt', 'lymeth', 'abtbtc', 'mdsbtc', 'zrxeth', 'polybtc', 'xzceth',
+                         'tosbtc', 'topbtc', 'dgbeth', 'lxtbtc', 'utketh', 'onebtc', 'ekobtc', 'powrbtc', 'uuueth', 'sspbtc', 'algoeth', 'paieth', 'naseth', 'uipbtc', 'wxtbtc', 'steemeth', 'hceth', 'pnteth',
+                         'mxht', 'lolbtc', 'newbtc', 'gtcbtc', 'lunbtc', 'arpabtc', 'topceth', 'mcoeth', 'appcbtc', 'swftceth', 'lxteth', 'toseth', 'ruffbtc', 'cvceth', 'geteth', 'utketh', 'swftceth', 'appcbtc',
+                         'aeeth', 'naseth', 'gvebtc', 'lolbtc', 'topcbtc', 'geteth', 'ruffeth', 'ncasheth', 'smtbtc', 'cnneth', 'loometh', 'astbtc', 'pntbtc', 'ardrbtc', 'sheeth', 'vidybtc', 'gtceth', 'dgdeth',
+                         'idteth', 'npxseth', 'gscbtc', 'ardreth', 'mtxbtc', 'mtnbtc', 'dcreth', 'srneth', 'srnbtc', 'hitbtc', 'ocnbtc', 'faireth', 'mdseth', 'iriseth', 'wicceth', 'mexeth', 'trioeth', 'evxeth',
+                         'gsceth', 'algoeth', 'smteth', 'acteth', 'etneth', 'ncceth', 'icxeth', 'zlaeth', 'lsketh', 'waveseth', 'kmdeth', 'getbtc', 'gxceth', 'meeteth', 'blzeth', 'maneth', 'edubtc', 'ugasbtc',
+                         'fttbtc', 'wprbtc', 'qspbtc', 'qashbtc', 'lambht', 'manaeth', 'grseth', 'evxbtc', 'nodeht', 'tntbtc', 'grsbtc', 'wtceth', 'nanoeth', 'itceth', 'bftbtc', 'gnteth', 'ckbht', 'vsysht',
+                         'bfteth', 'datxeth', 'rcnbtc', 'luneth', 'gtbtc', 'gaseth', 'egtbtc', 'mtht', 'iotaeth', 'datbtc', 'btseth', 'xembtc', 'dgdbtc', 'dateth', 'saltbtc', 'edueth', 'dockbtc', 'skmbtc',
+                         'powreth', 'ncashbtc', 'phxbtc', 'hiteth', 'rdnbtc', 'akroht', 'topht', 'ncashbtc', 'newht', 'fsnht', 'bhdht', 'hiveht', 'pvtbtc', 'atpht', 'akroht', 'skmbtc', 'bhtht', 'arpaht',
+                         'meetbtc', 'ognht', 'gveeth', 'ocneth', 'mexbtc', 'appceth', 'rdnbtc', 'mtneth', 'emht', 'mtxeth', 'ogoht', 'fttht', 'nccbtc', 'lolht', 'adxbtc', 'gtht', 'skmht', 'mtlbtc', 'ugaseth',
+                         'oneht', 'cnnsht', 'payeth', 'qasheth', 'creht', 'forht', 'polyeth', 'zlabtc', 'wxtht', 'vidyht', 'egtht', 'engbtc', 'wpreth', 'sbtcbtc', 'dbceth', 'pvtht', 'ostbtc', 'pceth', 'cnnsbtc',
+                         'docketh', 'bifibtc'],
+
+               'kraken': ['BTC/EUR', 'BTC/USD', 'ETH/USD', 'ETH/EUR', 'USDT/USD', 'USDT/EUR', 'LINK/USD', 'ETH/BTC', 'XTZ/USD', 'LINK/EUR', 'XRP/USD', 'BCH/USD', 'ADA/USD', 'XTZ/EUR', 'BTC/GBP', 'BTC/USDT',
+                          'ADA/EUR', 'ZEC/BTC', 'BCH/EUR', 'XRP/EUR', 'MLN/EUR', 'ZEC/EUR', 'ZEC/USD', 'XTZ/BTC', 'LTC/USD', 'LINK/BTC', 'BTC/CAD', 'USDC/EUR', 'PAXG/USD', 'USDT/JPY', 'USDC/USD', 'XLM/EUR',
+                          'XMR/BTC', 'XMR/EUR', 'ETH/USDT', 'ATOM/EUR', 'XLM/USD', 'LINK/ETH', 'BAT/EUR', 'ALGO/USD', 'BAT/USD', 'LTC/EUR', 'ALGO/BTC', 'DAI/USD', 'ATOM/BTC', 'XMR/USD', 'DASH/EUR', 'MLN/ETH',
+                          'REP/EUR', 'ADA/BTC', 'DAI/EUR', 'SC/EUR', 'PAXG/EUR', 'DASH/USD', 'MLN/USD', 'ATOM/USD', 'BTC/CHF', 'PAXG/BTC', 'USDC/USDT', 'REP/BTC', 'SC/BTC', 'XTZ/ETH', 'BTC/USDC', 'NANO/EUR',
+                          'EOS/EUR', 'XRP/BTC', 'EOS/USD', 'NANO/USD', 'BCH/BTC', 'BAT/BTC', 'ETH/GBP', 'ALGO/EUR', 'GNO/EUR', 'SC/USD', 'REP/USD', 'DAI/USDT', 'MLN/BTC', 'USDT/GBP', 'LTC/BTC', 'BTC/JPY',
+                          'ETH/CAD', 'ETC/EUR', 'OMG/EUR', 'GNO/BTC', 'NANO/BTC', 'ADA/ETH', 'DASH/BTC', 'XLM/BTC', 'TRX/EUR', 'DOGE/EUR', 'ETH/JPY', 'GNO/ETH', 'TRX/USD', 'QTUM/USD', 'NANO/ETH', 'XRP/ETH',
+                          'QTUM/EUR', 'ETH/USDC', 'ICX/EUR', 'SC/ETH', 'ICX/USD', 'WAVES/USD', 'ETH/DAI', 'OMG/USD', 'ETC/ETH', 'WAVES/EUR', 'ETC/USD', 'BCH/USDT', 'ETH/CHF', 'XRP/CAD', 'BAT/ETH', 'EOS/ETH',
+                          'USDT/CAD', 'OXT/BTC', 'LSK/BTC', 'OMG/BTC', 'XRP/USDT', 'OXT/USD', 'BCH/ETH', 'XRP/JPY', 'ATOM/ETH', 'OXT/EUR', 'PAXG/ETH', 'USDT/CHF', 'WAVES/BTC', 'ETC/BTC', 'ALGO/ETH', 'GNO/USD',
+                          'EOS/BTC', 'QTUM/BTC', 'TRX/BTC', 'DOGE/BTC', 'DOGE/USD', 'ICX/BTC', 'LSK/EUR', 'LTC/ETH', 'XRP/GBP', 'BTC/DAI', 'REP/ETH', 'OMG/ETH', 'ICX/ETH', 'OXT/ETH', 'LTC/USDT', 'QTUM/ETH',
+                          'TRX/ETH', 'LSK/USD', 'LSK/ETH', 'LTC/GBP', 'BCH/GBP', 'WAVES/ETH'],
 
                'okex': ['spot/trade:BTC-USDT', 'spot/trade:BTC-USD', 'spot/trade:ETH-USD', 'spot/trade:ETH-USDT', 'spot/trade:OKB-ETH', 'spot/trade:KNC-USDT', 'spot/trade:ETC-BTC', 'spot/trade:DEP-USDK',
                         'spot/trade:OKB-BTC', 'spot/trade:TRUE-BTC', 'spot/trade:KNC-BTC', 'spot/trade:OKB-USDK', 'spot/trade:OKB-USDT', 'spot/trade:ETC-ETH', 'spot/trade:BCH-USDT', 'spot/trade:DEP-USDT',
@@ -173,6 +241,8 @@ instruments = {'binance': 'btcusdt@trade/ethusdt@trade/adausdt@trade/linkusdt@tr
                         'spot/trade:WXT-OKB', 'spot/trade:IOTA-OKB', 'spot/trade:HDAO-USDK', 'spot/trade:LTC-USDC', 'spot/trade:VSYS-USDK', 'spot/trade:FSN-USDK', 'spot/trade:FTM-USDK', 'spot/trade:PLG-USDK',
                         'spot/trade:LEO-ETH', 'spot/trade:EM-USDK', 'spot/trade:LET-BTC', 'spot/trade:DOGE-USDK', 'spot/trade:LEO-USDK', 'spot/trade:ALGO-USDK', 'spot/trade:BTT-ETH', 'spot/trade:LAMB-USDK',
                         'spot/trade:BCX-BTC'],
+
+               'phemex': ['sBTCUSDT', 'sETHUSDT', 'sLINKUSDT', 'sXRPUSDT', 'sXTZUSDT', 'sLTCUSDT'],
 
                'zb': ['btcusdt', 'eosusdt', 'etcusdt', 'ethqc', 'btcqc', 'ltcusdt', 'usdtqc', 'ethusdt', 'eosqc', 'qtumusdt', 'croqc', 'crousdt', 'xrpusdt', 'neousdt', 'hcusdt', 'hcqc', 'zbqc', 'dashusdt',
                       'gusdqc', 'sntusdt', 'ltcqc', 'gntusdt', 'omgusdt', 'usdcqc', 'xlmusdt', 'btsqc', 'xrpqc', 'ufoqc', 'qtumqc', 'neoqc', 'dogeusdt', 'usdcusdt', 'adaqc', 'ltcbtc', 'adausdt', 'dnausdt',
