@@ -1,18 +1,20 @@
 import faust
-import psycopg2
 from datetime import datetime
 import zlib
 import time
 import json
+import base64
+import instruments
 
 # Dictionary meant to normalize data type for the 'direction' field in database
-normalizeDirectionField = {False: 'buy', '1': 'buy', 'buy': 'buy', 'b': 'buy',
-                           True: 'sell', '2': 'sell', 'sell': 'sell', 's': 'sell'}
+normalizeDirectionField = {False: 'buy', '1': 'buy', 'buy': 'buy', 'b': 'buy', 'bid': 'buy', 1: 'buy',
+                           True: 'sell', '2': 'sell', 'sell': 'sell', 's': 'sell', 'ask': 'sell', 2: 'sell', 0: 'sell'}
 
 
 # Start Faust
 app = faust.App('hello-app', broker='kafka://localhost')
 ingestData = app.topic('ingestData')
+biboxTrades = app.topic('biboxTrades')
 binanceTrades = app.topic('binanceTrades')
 binanceOrderBook = app.topic('binanceOrderBook1')
 binanceUsTrades = app.topic('binanceUsTrades')
@@ -25,11 +27,13 @@ bitstampTrades = app.topic('bitstampTrades')
 coinbaseTrades = app.topic('coinbaseTrades')
 coinexTrades = app.topic('coinexTrades')
 gateTrades = app.topic('gateTrades')
-huobiTrades = app.topic('huobiTrades')
+geminiTrades = app.topic('geminiTrades')
+hitbtcTrades = app.topic('hitbtcTrades')
 huobiTrades = app.topic('huobiTrades', value_serializer='raw')
 krakenTrades = app.topic('krakenTrades')
 okexTrades = app.topic('okexTrades', value_serializer='raw')
 phemexTrades = app.topic('phemexTrades')
+poloniexTrades = app.topic('poloniexTrades')
 zbTrades = app.topic('zbTrades')
 
 # Ingest data from Druid
@@ -37,6 +41,21 @@ zbTrades = app.topic('zbTrades')
 async def ingestdata(dataList):
     async for data in dataList:
         pass
+
+@app.agent(biboxTrades)
+async def biboxtrades(msgs):
+    async for msg in msgs:
+        if isinstance(msg, list):
+            # decompress, decode, then jsonify msg
+            msg = json.loads((zlib.decompress(base64.b64decode(msg[0]['data']), zlib.MAX_WBITS | 32)).decode('utf-8'))
+            for submsg in msg:
+                exchange = 'bibox'
+                pair = submsg['pair'].replace('_', '').lower()
+                amount = submsg['amount']
+                price = submsg['price']
+                direction = normalizeDirectionField[submsg['side']]
+                ts = submsg['time'] // 1000
+                print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
 
 @app.agent(binanceTrades)
 async def binancetrades(msgs):
@@ -200,6 +219,33 @@ async def gatetrades(msgs):
                 ts = int(submsg['time'] // 1)
                 print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
 
+@app.agent(geminiTrades)
+async def geminitrades(msgs):
+    async for msg in msgs:
+        if msg['socket_sequence'] != 0:
+            for data in msg['events']:
+                exchange = 'gemini'
+                pair = msg['pair']
+                amount = data['amount']
+                price = data['price']
+                direction = normalizeDirectionField[data['makerSide']]
+                ts = msg['timestamp']
+                print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+
+@app.agent(hitbtcTrades)
+async def hitbtctrades(msgs):
+    async for msg in msgs:
+        if 'params' in msg:
+            for data in msg['params']['data']:
+                exchange = 'hitbtc'
+                pair = msg['params']['symbol'].lower()
+                amount = data['quantity']
+                price = data['price']
+                direction = data['side']
+                dt = datetime.strptime(data['timestamp'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
+                ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
+                print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+
 @app.agent(huobiTrades)
 async def huobitrades(msgs):
     async for msg in msgs:
@@ -259,17 +305,33 @@ async def phemextrades(msgs):
                 ts = data[0]//10000
                 print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
 
+@app.agent(poloniexTrades)
+async def poloniextrades(msgs):
+    async for msg in msgs:
+        if len(msg) >= 3:
+            for submsg in msg[2]:
+                if submsg[0] == 't':
+                    exchange = 'poloniex'
+                    pairFormat = (instruments.poloniexId[msg[0]]).split('_')
+                    pair = (pairFormat[1] + pairFormat[0]).lower()
+                    amount = submsg[4]
+                    price = submsg[3]
+                    direction = normalizeDirectionField[submsg[2]]
+                    ts = submsg[5]
+                    print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+
 @app.agent(zbTrades)
 async def zbtrades(msgs):
     async for msg in msgs:
-        exchange = 'zb'
-        pair = msg['channel'].split('_')[0]
-        for submsg in msg['data']:
-            amount = submsg['amount']
-            price = submsg['price']
-            direction = normalizeDirectionField[submsg['type']]
-            ts = submsg['date']
-            print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+        if 'data' in msg:
+            exchange = 'zb'
+            pair = msg['channel'].split('_')[0]
+            for submsg in msg['data']:
+                amount = submsg['amount']
+                price = submsg['price']
+                direction = normalizeDirectionField[submsg['type']]
+                ts = submsg['date']
+                print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
 
 if __name__ == '__main__':
     app.main()

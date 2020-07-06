@@ -12,6 +12,7 @@ import time
 from datetime import datetime
 from kafka import KafkaProducer
 import instruments
+import base64
 
 
 class Base(WebSocketClientProtocol):

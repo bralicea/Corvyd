@@ -27,4 +27,3 @@ class Huobi(base.Base):
 
 
 base.createConnection("wss://api.huobi.pro/ws", 443, Huobi)
-
