@@ -31,6 +31,7 @@ geminiTrades = app.topic('geminiTrades')
 hitbtcTrades = app.topic('hitbtcTrades')
 huobiTrades = app.topic('huobiTrades', value_serializer='raw')
 krakenTrades = app.topic('krakenTrades')
+kucoinTrades = app.topic('kucoinTrades')
 okexTrades = app.topic('okexTrades', value_serializer='raw')
 phemexTrades = app.topic('phemexTrades')
 poloniexTrades = app.topic('poloniexTrades')
@@ -274,6 +275,19 @@ async def krakentrades(msgs):
                 direction = normalizeDirectionField[data[3]]
                 ts = int(float(data[2])//1)
                 print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+
+@app.agent(kucoinTrades)
+async def kucointrades(msgs):
+    async for msg in msgs:
+        if 'data' in msg and 'sequence' in msg['data']:
+            msg = msg['data']
+            exchange = 'kucoin'
+            pair = msg['symbol'].replace('-', '').lower()
+            amount = msg['size']
+            price = msg['price']
+            direction = msg['side']
+            ts = int(msg['time'])//1000
+            print({'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
 
 @app.agent(okexTrades)
 async def okextrades(msgs):

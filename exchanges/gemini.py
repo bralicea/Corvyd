@@ -8,7 +8,7 @@ class GeminiBTC(base.Base):
         payload["pair"] = 'btcusd'
         self.producer.send('geminiTrades', base.json.dumps(payload).encode('utf-8'))
 
-class GeminiETH(base.Base):
+class GeminiETH(GeminiBTC):
 
     def onMessage(self, payload, isBinary):
         payload = base.json.loads(payload.decode('utf-8'))
