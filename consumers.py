@@ -62,7 +62,7 @@ async def biboxtrades(msgs):
                 price = submsg['price']
                 direction = normalizeDirectionField[submsg['side']]
                 ts = submsg['time'] // 1000
-                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(binanceTrades)
 async def binancetrades(msgs):
@@ -74,16 +74,12 @@ async def binancetrades(msgs):
         price = msg['p']
         direction = normalizeDirectionField[msg['m']]
         ts = msg['T'] // 1000
-        await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+        await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(binanceOrderBook)
 async def binanceorderbook(msgs):
     async for msg in msgs:
-        dict = {'exchange': 'binance', 'pair': msg['stream'].split('@')[0], 'bids': {}, 'asks': {}, 'ts': int(time.time()//1)}
-        for bids in (msg['data']['bids']):
-            dict['bids'][float(bids[0])] = float(bids[1])
-        for asks in (msg['data']['asks']):
-            dict['asks'][float(asks[0])] = float(asks[1])
+        dict = {'exchange': 'binance', 'pair': msg['stream'].split('@')[0], 'bids': msg['data']['bids'], 'asks': msg['data']['asks'], 'time': int(time.time()//1)}
         await ingestobdata.send(value=dict)
 
 @app.agent(binanceUsTrades)
@@ -96,7 +92,7 @@ async def binanceustrades(msgs):
         price = msg['p']
         direction = normalizeDirectionField[msg['m']]
         ts = msg['T'] // 1000
-        await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+        await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(bikiTrades)
 async def bikitrades(msgs):
@@ -109,26 +105,47 @@ async def bikitrades(msgs):
             price = float(msg['tick']['data'][0]['price'])
             direction = normalizeDirectionField[msg['tick']['data'][0]['side'].lower()]
             ts = msg['tick']['data'][0]['ts'] // 1000
-            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(bitfinexTrades)
 async def bitfinextrades(msgs):
+    # Bitfinex generates new pair IDs every connection
     bitfinexId = {}
     async for msg in msgs:
         if 'event' in msg and msg['event'] == 'subscribed':
+            # Read current IDs
+            f = open("bitfinexId.json", "r+")
+            fileDict = json.loads(f.read())
+            f.close()
+
+            # Open in write mode to clear log and add dictionary with new ID
+            f = open("bitfinexId.json", "w")
+            fileDict[msg['chanId']] = msg['symbol']
+            f.write(json.dumps(fileDict))
+            f.close()
+
+            # Add id to dictionary
             bitfinexId[msg['chanId']] = msg['symbol']
 
         elif len(msg) == 3:
             exchange = 'bitfinex'
-            pair = bitfinexId[msg[0]][1::].lower()
-            amount = msg[2][2]
+            # Try to read ID from dictionary. If it doesn't exist, read from file and then add to dictionary
+            try:
+                pair = bitfinexId[msg[0]][1::].lower()
+            except:
+                f = open("bitfinexId.json", "r+")
+                fileDict = json.loads(f.read())
+                pair = fileDict[str(msg[0])][1::].lower()
+                bitfinexId[msg[0]] = fileDict[str(msg[0])]
+                f.close()
+            amount = abs(msg[2][2])
             price = msg[2][3]
             if amount >= 0:
                 direction = "buy"
             else:
                 direction = "sell"
             ts = msg[2][1] // 1000
-            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(bitflyerTrades)
 async def bitflyertrades(msgs):
@@ -142,7 +159,7 @@ async def bitflyertrades(msgs):
             direction = data['side'].lower()
             dt = datetime.strptime(data['exec_date'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
             ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
-            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(bitforexTrades)
 async def bitforextrades(msgs):
@@ -154,7 +171,7 @@ async def bitforextrades(msgs):
         price = msg['data'][0]['price']
         direction = normalizeDirectionField[str(msg['data'][0]['direction'])]
         ts = msg['data'][0]['time'] // 1000
-        await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+        await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(bitmexTrades)
 async def bitmextrades(msgs):
@@ -171,7 +188,7 @@ async def bitmextrades(msgs):
             direction = normalizeDirectionField[msg['side'].lower()]
             dt = datetime.strptime(msg['timestamp'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
             ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
-            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(bitstampTrades)
 async def bitstamptrades(msgs):
@@ -186,7 +203,7 @@ async def bitstamptrades(msgs):
             else:
                 direction = 'sell'
             ts = msg['data']['timestamp']
-            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(coinexTrades)
 async def coinextrades(msgs):
@@ -199,7 +216,7 @@ async def coinextrades(msgs):
                 price = float(ms['price'])
                 direction = normalizeDirectionField[ms['type']]
                 ts = int(ms['time'] // 1)
-                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(coinbaseTrades)
 async def coinbasetrades(msgs):
@@ -212,7 +229,7 @@ async def coinbasetrades(msgs):
             direction = msg['side']
             dt = datetime.strptime(msg['time'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
             ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
-            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(gateTrades)
 async def gatetrades(msgs):
@@ -226,7 +243,7 @@ async def gatetrades(msgs):
                 price = float(submsg['price'])
                 direction = normalizeDirectionField[submsg['type']]
                 ts = int(submsg['time'] // 1)
-                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(geminiTrades)
 async def geminitrades(msgs):
@@ -239,7 +256,7 @@ async def geminitrades(msgs):
                 price = data['price']
                 direction = normalizeDirectionField[data['makerSide']]
                 ts = msg['timestamp']
-                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(hitbtcTrades)
 async def hitbtctrades(msgs):
@@ -253,7 +270,7 @@ async def hitbtctrades(msgs):
                 direction = data['side']
                 dt = datetime.strptime(data['timestamp'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
                 ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
-                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(huobiTrades)
 async def huobitrades(msgs):
@@ -267,7 +284,7 @@ async def huobitrades(msgs):
                 price = data['price']
                 direction = data['direction']
                 ts = data['ts']//1000
-                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(krakenTrades)
 async def krakentrades(msgs):
@@ -282,7 +299,7 @@ async def krakentrades(msgs):
                 price = data[0]
                 direction = normalizeDirectionField[data[3]]
                 ts = int(float(data[2])//1)
-                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(kucoinTrades)
 async def kucointrades(msgs):
@@ -295,7 +312,7 @@ async def kucointrades(msgs):
             price = msg['price']
             direction = msg['side']
             ts = int(msg['time'])//1000
-            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(okexTrades)
 async def okextrades(msgs):
@@ -311,7 +328,7 @@ async def okextrades(msgs):
             direction = normalizeDirectionField[msg['side']]
             dt = datetime.strptime(msg['timestamp'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
             ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds())
-            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+            await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 # Phemex needs to fix their amount and price formats
 @app.agent(phemexTrades)
@@ -325,7 +342,7 @@ async def phemextrades(msgs):
                 price = data[2]
                 direction = data[1].lower()
                 ts = data[0]//10000
-                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(poloniexTrades)
 async def poloniextrades(msgs):
@@ -340,7 +357,7 @@ async def poloniextrades(msgs):
                     price = submsg[3]
                     direction = normalizeDirectionField[submsg[2]]
                     ts = submsg[5]
-                    await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+                    await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(zbTrades)
 async def zbtrades(msgs):
@@ -353,7 +370,7 @@ async def zbtrades(msgs):
                 price = submsg['price']
                 direction = normalizeDirectionField[submsg['type']]
                 ts = submsg['date']
-                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'ts': ts})
+                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 if __name__ == '__main__':
     app.main()

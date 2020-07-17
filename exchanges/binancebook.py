@@ -12,4 +12,3 @@ def start():
 
 
 start()
-base.reactor.run()
