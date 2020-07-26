@@ -24,6 +24,7 @@ bitflyerTrades = app.topic('bitflyerTrades')
 bitforexTrades = app.topic('bitforexTrades')
 bitmexTrades = app.topic('bitmexTrades')
 bitstampTrades = app.topic('bitstampTrades')
+bittrexTrades = app.topic('bittrexTrades', value_serializer='raw')
 coinbaseTrades = app.topic('coinbaseTrades')
 coinexTrades = app.topic('coinexTrades')
 gateTrades = app.topic('gateTrades')
@@ -205,6 +206,22 @@ async def bitstamptrades(msgs):
             ts = msg['data']['timestamp']
             await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
+@app.agent(bittrexTrades)
+async def bittrextrades(msgs):
+    async for msg in msgs:
+        decompress_msg = zlib.decompress(base64.b64decode(msg, validate=True), -zlib.MAX_WBITS)
+        msg = json.loads(decompress_msg.decode('utf-8'))
+        if msg['f'] != []:
+            for data in msg['f']:
+                exchange = 'bittrex'
+                pairFormat = msg['M'].split('-')
+                pair = (pairFormat[1] + pairFormat[0]).lower()
+                amount = data['Q']
+                price = data['R']
+                direction = data['OT'].lower()
+                ts = data['T'] // 1000
+                await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
+
 @app.agent(coinexTrades)
 async def coinextrades(msgs):
     async for msg in msgs:
@@ -283,7 +300,7 @@ async def huobitrades(msgs):
                 amount = data['amount']
                 price = data['price']
                 direction = data['direction']
-                ts = data['ts']//1000
+                ts = data['ts'] // 1000
                 await ingestdata.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(krakenTrades)

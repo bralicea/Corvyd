@@ -12,6 +12,8 @@
 # Requires Python3.5+
 # pip install git+https://github.com/slazarov/python-signalr-client.git
 
+# Bittrex uses SignalR. Difficult to get working with Twisted.
+
 from signalr_aio import Connection
 from base64 import b64decode
 from zlib import decompress, MAX_WBITS
@@ -57,10 +59,7 @@ async def on_error(msg):
 
 # Create hub message handler
 async def on_message(msg):
-    decoded_msg = await process_message(msg[0])
-    print(decoded_msg)
-    #if (decoded_msg['f']) != []:
-    #    print(decoded_msg['f'])
+    producer.send('bittrexTrades', msg[0].encode('utf-8'))
 
 
 async def on_private(msg):
@@ -68,35 +67,37 @@ async def on_private(msg):
     print(decoded_msg)
 
 
-if __name__ == "__main__":
-    # Create connection
-    # Users can optionally pass a session object to the client, e.g a cfscrape session to bypass cloudflare.
-    connection = Connection('https://socket.bittrex.com/signalr', session=None)
+# Create connection
+# Users can optionally pass a session object to the client, e.g a cfscrape session to bypass cloudflare.
+connection = Connection('https://socket.bittrex.com/signalr', session=None)
 
-    # Register hub
-    hub = connection.register_hub('c2')
+# Register hub
+hub = connection.register_hub('c2')
 
-    # Assign debug message handler. It streams unfiltered data, uncomment it to test.
-    connection.received += on_debug
+# Assign debug message handler. It streams unfiltered data, uncomment it to test.
+connection.received += on_debug
 
-    # Assign error handler
-    connection.error += on_error
+# Assign error handler
+connection.error += on_error
 
-    # Assign hub message handler
-    # Public callbacks
-    hub.client.on('uE', on_message)
-    hub.client.on('uS', on_message)
-    # Private callbacks
-    hub.client.on('uB', on_private)
-    hub.client.on('uO', on_private)
+# Assign hub message handler
+# Public callbacks
+hub.client.on('uE', on_message)
+hub.client.on('uS', on_message)
+# Private callbacks
+hub.client.on('uB', on_private)
+hub.client.on('uO', on_private)
 
-    # Send a message
-    for instrument in base.instruments.instruments['bittrex']:
-        hub.server.invoke('SubscribeToExchangeDeltas', instrument)  # Invoke 0
+# Send a message
+for instrument in base.instruments.instruments['bittrex']:
+    hub.server.invoke('SubscribeToExchangeDeltas', instrument)  # Invoke 0
 
-    # Private methods
-    # API_KEY, API_SECRET = '### API KEY ###', '### API SECRET ###'
-    # hub.server.invoke('GetAuthContext', API_KEY) # Invoke 3
+# Private methods
+# API_KEY, API_SECRET = '### API KEY ###', '### API SECRET ###'
+# hub.server.invoke('GetAuthContext', API_KEY) # Invoke 3
 
-    # Start the client
-    connection.start()
+# Set producer
+producer = base.Base.producer
+
+# Start the client
+connection.start()
