@@ -12,8 +12,8 @@ normalizeDirectionField = {False: 'buy', '1': 'buy', 'buy': 'buy', 'b': 'buy', '
 
 # Start Faust
 app = faust.App('hello-app', broker='ec2-18-208-126-104.compute-1.amazonaws.com:9092')
-ingestData = app.topic('ingestData')
-ingestOBData = app.topic('ingestOBData')
+Trades = app.topic('Trades')
+OrderBooks = app.topic('OrderBooks')
 biboxTrades = app.topic('biboxTrades')
 binanceTrades = app.topic('binanceTrades')
 binanceOrderBook = app.topic('binanceOrderBook1')
@@ -39,14 +39,14 @@ poloniexTrades = app.topic('poloniexTrades')
 zbTrades = app.topic('zbTrades')
 
 # Ingest trade data from Druid
-@app.agent(ingestData)
-async def ingestdata(dataList):
+@app.agent(Trades)
+async def trades(dataList):
     async for data in dataList:
-        print(data)
+        pass
 
 # Ingest order book data from Druid
-@app.agent(ingestOBData)
-async def ingestobdata(dataList):
+@app.agent(OrderBooks)
+async def orderbooks(dataList):
     async for data in dataList:
         pass
 
