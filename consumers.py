@@ -112,40 +112,43 @@ async def bitfinextrades(msgs):
     # Bitfinex generates new pair IDs every connection
     bitfinexId = {}
     async for msg in msgs:
-        if 'event' in msg and msg['event'] == 'subscribed':
-            # Read current IDs
-            f = open("bitfinexId.json", "r+")
-            fileDict = json.loads(f.read())
-            f.close()
-
-            # Open in write mode to clear log and add dictionary with new ID
-            f = open("bitfinexId.json", "w")
-            fileDict[msg['chanId']] = msg['symbol']
-            f.write(json.dumps(fileDict))
-            f.close()
-
-            # Add id to dictionary
-            bitfinexId[msg['chanId']] = msg['symbol']
-
-        elif len(msg) == 3:
-            exchange = 'bitfinex'
-            # Try to read ID from dictionary. If it doesn't exist, read from file and then add to dictionary
-            try:
-                pair = bitfinexId[msg[0]][1::].lower()
-            except:
+        try:
+            if 'event' in msg and msg['event'] == 'subscribed':
+                # Read current IDs
                 f = open("bitfinexId.json", "r+")
                 fileDict = json.loads(f.read())
-                pair = fileDict[str(msg[0])][1::].lower()
-                bitfinexId[msg[0]] = fileDict[str(msg[0])]
                 f.close()
-            amount = abs(msg[2][2])
-            price = msg[2][3]
-            if amount >= 0:
-                direction = "buy"
-            else:
-                direction = "sell"
-            ts = msg[2][1] // 1000
-            await trades.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
+
+                # Open in write mode to clear log and add dictionary with new ID
+                f = open("bitfinexId.json", "w")
+                fileDict[msg['chanId']] = msg['symbol']
+                f.write(json.dumps(fileDict))
+                f.close()
+
+                # Add id to dictionary
+                bitfinexId[msg['chanId']] = msg['symbol']
+
+            elif len(msg) == 3:
+                exchange = 'bitfinex'
+                # Try to read ID from dictionary. If it doesn't exist, read from file and then add to dictionary
+                try:
+                    pair = bitfinexId[msg[0]][1::].lower()
+                except:
+                    f = open("bitfinexId.json", "r+")
+                    fileDict = json.loads(f.read())
+                    pair = fileDict[str(msg[0])][1::].lower()
+                    bitfinexId[msg[0]] = fileDict[str(msg[0])]
+                    f.close()
+                amount = abs(msg[2][2])
+                price = msg[2][3]
+                if amount >= 0:
+                    direction = "buy"
+                else:
+                    direction = "sell"
+                ts = msg[2][1] // 1000
+                await trades.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
+        except:
+            pass
 
 @app.agent(bitflyerTrades)
 async def bitflyertrades(msgs):
@@ -327,7 +330,7 @@ async def kucointrades(msgs):
             amount = msg['size']
             price = msg['price']
             direction = msg['side']
-            ts = int(msg['time'])//1000000
+            ts = int(msg['time'])//1000000000
             await trades.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(okexTrades)
