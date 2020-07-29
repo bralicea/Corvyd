@@ -327,7 +327,7 @@ async def kucointrades(msgs):
             amount = msg['size']
             price = msg['price']
             direction = msg['side']
-            ts = int(msg['time'])//1000
+            ts = int(msg['time'])//1000000
             await trades.send(value={'exchange': exchange, 'pair': pair, 'amount': amount, 'price': price, 'direction': direction, 'time': ts})
 
 @app.agent(okexTrades)
