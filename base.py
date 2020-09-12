@@ -16,7 +16,7 @@ import requests
 
 class Base(WebSocketClientProtocol):
 
-    producer = KafkaProducer(bootstrap_servers='ec2-18-208-126-104.compute-1.amazonaws.com:9092')
+    producer = KafkaProducer(bootstrap_servers='localhost:9092')
 
     def onConnect(self, response):
         print("Server connected: {0}".format(response.peer))

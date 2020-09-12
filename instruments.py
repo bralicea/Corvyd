@@ -56,12 +56,64 @@ instruments = {'bibox': ['BTC_USDT', 'ETH_USDT', 'BCH_USDT', 'XRP_USDT', 'LTC_US
                           'xrpeur@trade/icxbusd@trade/bttpax@trade/cosbnb@trade/ncasheth@trade/gtoeth@trade/tnteth@trade/ltobnb@trade/aionbusd@trade/enjbnb@trade/btsbusd@trade/aeeth@trade/xzcbnb@trade/renbnb@trade/'
                           'wavesbnb@trade/wavesbusd@trade/usdtzar@trade/usdsusdt@trade/algopax@trade/gtobnb@trade/mtleth@trade/xemeth@trade/osteth@trade/bnbeur@trade/busdrub@trade/bnbrub@trade',
 
+                'binanceOB': 'btcusdt@depth20/ethusdt@depth20/linkusdt@depth20/bchusdt@depth20/adausdt@depth20/ethbtc@depth20/xrpusdt@depth20/batusdt@depth20/xtzusdt@depth20/eosusdt@depth20/btcbusd@depth20/bnbusdt@depth20/busdusdt@depth20/'
+                          'ltcusdt@depth20/vetusdt@depth20/zilusdt@depth20/ontusdt@depth20/etcusdt@depth20/lunbtc@depth20/zecusdt@depth20/bnbbtc@depth20/batbtc@depth20/btcusdc@depth20/linkbtc@depth20/ongusdt@depth20/xlmusdt@depth20/'
+                          'zilbtc@depth20/usdcusdt@depth20/ongbtc@depth20/btgbtc@depth20/trxusdt@depth20/maticusdt@depth20/xrpbtc@depth20/adabtc@depth20/iostusdt@depth20/atomusdt@depth20/maticbtc@depth20/neousdt@depth20/bchbtc@depth20/'
+                          'xvgbtc@depth20/zecbtc@depth20/ontbtc@depth20/eosbtc@depth20/edobtc@depth20/erdbtc@depth20/xmrbtc@depth20/btcpax@depth20/erdusdt@depth20/xtzbtc@depth20/xmrusdt@depth20/paxusdt@depth20/bcdbtc@depth20/onebtc@depth20/'
+                          'solbtc@depth20/ethbusd@depth20/qtumusdt@depth20/rvnbtc@depth20/ltcbtc@depth20/dashusdt@depth20/scbtc@depth20/xlmbtc@depth20/bateth@depth20/zrxusdt@depth20/kncbtc@depth20/oneusdt@depth20/tusdusdt@depth20/'
+                          'lendbtc@depth20/atombtc@depth20/hbarbtc@depth20/iostbtc@depth20/ethusdc@depth20/tnbbtc@depth20/btctusd@depth20/vetbtc@depth20/oaxbtc@depth20/nulsbtc@depth20/zrxbtc@depth20/algousdt@depth20/omgusdt@depth20/'
+                          'ognusdt@depth20/btcngn@depth20/tomobtc@depth20/reqbtc@depth20/hbarusdt@depth20/lendusdt@depth20/nulsusdt@depth20/kavabtc@depth20/neobtc@depth20/renbtc@depth20/thetausdt@depth20/ltobtc@depth20/tomousdt@depth20/'
+                          'dgbbtc@depth20/kavausdt@depth20/bntusdt@depth20/trxbtc@depth20/rvnusdt@depth20/chrbtc@depth20/thetabtc@depth20/enjbtc@depth20/renusdt@depth20/bntbtc@depth20/drepbtc@depth20/etcbtc@depth20/ankrbtc@depth20/'
+                          'chrusdt@depth20/kncusdt@depth20/wrxbtc@depth20/ognbtc@depth20/wrxusdt@depth20/celrbtc@depth20/tfuelusdt@depth20/ctsibtc@depth20/qkcbtc@depth20/chzbtc@depth20/repbtc@depth20/bttusdt@depth20/algobtc@depth20/'
+                          'iotausdt@depth20/ethzar@depth20/gasbtc@depth20/cotibtc@depth20/dashbtc@depth20/winusdt@depth20/gobtc@depth20/omgbtc@depth20/zileth@depth20/nknbtc@depth20/enjusdt@depth20/qtumbtc@depth20/ctxcusdt@depth20/'
+                          'ctxcbtc@depth20/beamusdt@depth20/ethpax@depth20/celrusdt@depth20/icxusdt@depth20/nanousdt@depth20/ankrusdt@depth20/ctsiusdt@depth20/solbusd@depth20/qlcbtc@depth20/iotxbtc@depth20/bandusdt@depth20/nasbtc@depth20/'
+                          'ethtusd@depth20/aionusdt@depth20/iotabtc@depth20/rlcbtc@depth20/tfuelbtc@depth20/cotiusdt@depth20/nanobtc@depth20/loombtc@depth20/beambtc@depth20/drepusdt@depth20/arnbtc@depth20/manabtc@depth20/chzusdt@depth20/'
+                          'gvtbtc@depth20/linketh@depth20/adaeth@depth20/aionbtc@depth20/zilbusd@depth20/eostusd@depth20/bnbbusd@depth20/icxbtc@depth20/eoseth@depth20/blzbtc@depth20/trxeth@depth20/btceur@depth20/iotxusdt@depth20/'
+                          'troybtc@depth20/nknusdt@depth20/mdtbtc@depth20/bandbtc@depth20/mcobtc@depth20/lendeth@depth20/busdngn@depth20/xrpeth@depth20/phbbtc@depth20/polybtc@depth20/bnbeth@depth20/viabtc@depth20/arkbtc@depth20/zilbnb@depth20/'
+                          'perlusdt@depth20/kmdbtc@depth20/mblusdt@depth20/steembtc@depth20/maticbusd@depth20/fetusdt@depth20/edoeth@depth20/rlcusdt@depth20/wabibtc@depth20/brdbtc@depth20/usdttry@depth20/trxbnb@depth20/rdnbtc@depth20/'
+                          'engbtc@depth20/fttbtc@depth20/dogeusdt@depth20/btttrx@depth20/vibbtc@depth20/mdabtc@depth20/hiveusdt@depth20/fetbtc@depth20/btsbtc@depth20/appcbtc@depth20/erdbnb@depth20/stratbtc@depth20/lrcbtc@depth20/'
+                          'hotusdt@depth20/ambbtc@depth20/bchbusd@depth20/xrpbusd@depth20/skybtc@depth20/elfbtc@depth20/batbusd@depth20/wavesbtc@depth20/qspbtc@depth20/pptbtc@depth20/storjbtc@depth20/gntbtc@depth20/ftmbtc@depth20/'
+                          'cmtbtc@depth20/adabusd@depth20/xrpbnb@depth20/funbtc@depth20/btctry@depth20/zenbtc@depth20/cosbtc@depth20/veteth@depth20/stmxbtc@depth20/bchpax@depth20/mblbtc@depth20/linkusdc@depth20/iqbusd@depth20/bqxbtc@depth20/'
+                          'stmxusdt@depth20/perlbtc@depth20/bchtusd@depth20/ltousdt@depth20/hivebtc@depth20/dogebtc@depth20/xembtc@depth20/xvgeth@depth20/astbtc@depth20/sceth@depth20/wanbtc@depth20/cosusdt@depth20/linkbusd@depth20/'
+                          'wtcbtc@depth20/wavesusdt@depth20/snglsbtc@depth20/batbnb@depth20/agibtc@depth20/databtc@depth20/bchusdc@depth20/evxbtc@depth20/solbnb@depth20/stxbtc@depth20/batusdc@depth20/cdtbtc@depth20/arpausdt@depth20/'
+                          'dockbtc@depth20/cvcbtc@depth20/fuelbtc@depth20/btsusdt@depth20/eosbusd@depth20/dltbtc@depth20/mcousdt@depth20/wanusdt@depth20/knceth@depth20/ltceth@depth20/ftmusdt@depth20/troyusdt@depth20/arpabtc@depth20/'
+                          'lskbtc@depth20/wintrx@depth20/iotxeth@depth20/powrbtc@depth20/usdtrub@depth20/grsbtc@depth20/tctbtc@depth20/bchbnb@depth20/btcrub@depth20/hotbtc@depth20/keyusdt@depth20/adausdc@depth20/xzcbtc@depth20/gxsbtc@depth20/'
+                          'mtlbtc@depth20/dgbbusd@depth20/pivxbtc@depth20/stratusdt@depth20/etheur@depth20/tntbtc@depth20/maticbnb@depth20/adxbtc@depth20/vibebtc@depth20/stxusdt@depth20/navbtc@depth20/sysbtc@depth20/dcrbtc@depth20/'
+                          'bnbusdc@depth20/mdtusdt@depth20/zeceth@depth20/mithbtc@depth20/qspeth@depth20/onebnb@depth20/neoeth@depth20/cocosusdt@depth20/funusdt@depth20/aebtc@depth20/sntbtc@depth20/stptusdt@depth20/xmreth@depth20/'
+                          'adatusd@depth20/dockusdt@depth20/neblbtc@depth20/ethrub@depth20/eosusdc@depth20/zecbusd@depth20/ltcbusd@depth20/ltcusdc@depth20/fttbnb@depth20/duskbtc@depth20/datausdt@depth20/mblbnb@depth20/rcnbtc@depth20/'
+                          'vetbusd@depth20/poebtc@depth20/scbnb@depth20/npxsusdt@depth20/wabibnb@depth20/duskusdt@depth20/bnteth@depth20/ltcbnb@depth20/xrpusdc@depth20/naseth@depth20/ardrbtc@depth20/linktusd@depth20/bcptbtc@depth20/'
+                          'dgbbnb@depth20/erdbusd@depth20/elfeth@depth20/ontbusd@depth20/vitebtc@depth20/gtobtc@depth20/mithusdt@depth20/nulseth@depth20/mcoeth@depth20/bttbnb@depth20/xmrbnb@depth20/xlmeth@depth20/algotusd@depth20/'
+                          'eosbnb@depth20/arpabnb@depth20/fttusdt@depth20/adabnb@depth20/winbnb@depth20/dntbtc@depth20/omgeth@depth20/onteth@depth20/zectusd@depth20/xtzbnb@depth20/tomobusd@depth20/snmbtc@depth20/hcbtc@depth20/poabtc@depth20/'
+                          'tomobnb@depth20/thetaeth@depth20/bttbusd@depth20/nxsbtc@depth20/repeth@depth20/btcidrt@depth20/etcbusd@depth20/trxusdc@depth20/etceth@depth20/cvcusdt@depth20/xtzbusd@depth20/wtcusdt@depth20/xzcusdt@depth20/'
+                          'npxseth@depth20/thetabnb@depth20/cdteth@depth20/mthbtc@depth20/celrbnb@depth20/yoyobtc@depth20/enjeth@depth20/mftusdt@depth20/algobnb@depth20/xrptusd@depth20/evxeth@depth20/gtousdt@depth20/mtlusdt@depth20/'
+                          'xlmbusd@depth20/hoteth@depth20/trxtusd@depth20/qlceth@depth20/nknbnb@depth20/rlceth@depth20/stmxeth@depth20/nanoeth@depth20/hbarbnb@depth20/blzbnb@depth20/wrxbnb@depth20/iosteth@depth20/trxxrp@depth20/'
+                          'lskusdt@depth20/ltctusd@depth20/atombnb@depth20/manaeth@depth20/blzeth@depth20/tctusdt@depth20/vibeth@depth20/ctsibnb@depth20/stptbtc@depth20/hbarbusd@depth20/dentusdt@depth20/trxbusd@depth20/ardrusdt@depth20/'
+                          'cndbtc@depth20/zrxeth@depth20/snteth@depth20/ltcpax@depth20/bntbusd@depth20/aioneth@depth20/vetbnb@depth20/ognbnb@depth20/viteusdt@depth20/algobusd@depth20/brdeth@depth20/mdtbnb@depth20/mithbnb@depth20/'
+                          'bandbnb@depth20/btttusd@depth20/ankrbnb@depth20/bcdeth@depth20/bgbpusdc@depth20/hcusdt@depth20/xmrbusd@depth20/nebleth@depth20/ostbtc@depth20/dasheth@depth20/iotaeth@depth20/chrbnb@depth20/rdneth@depth20/'
+                          'denteth@depth20/qkceth@depth20/loometh@depth20/bnbpax@depth20/nanobusd@depth20/wprbtc@depth20/brdbnb@depth20/zenbnb@depth20/lrceth@depth20/trxpax@depth20/qtumbusd@depth20/ppteth@depth20/waneth@depth20/'
+                          'gnteth@depth20/busdtry@depth20/usdcpax@depth20/hotbnb@depth20/xrppax@depth20/zeneth@depth20/winusdc@depth20/phbtusd@depth20/neobnb@depth20/cotibnb@depth20/rvnbnb@depth20/xlmbnb@depth20/wtceth@depth20/'
+                          'rvnbusd@depth20/kavabnb@depth20/bnbtry@depth20/waveseth@depth20/cmteth@depth20/neobusd@depth20/ontbnb@depth20/strateth@depth20/keyeth@depth20/powreth@depth20/bnbtusd@depth20/neblbnb@depth20/qtumeth@depth20/'
+                          'zecusdc@depth20/docketh@depth20/perlbnb@depth20/bnbngn@depth20/usdtidrt@depth20/adxeth@depth20/lsketh@depth20/bnbidrt@depth20/funeth@depth20/bttusdc@depth20/dataeth@depth20/enjbusd@depth20/chzbnb@depth20/'
+                          'iqbnb@depth20/engeth@depth20/bqxeth@depth20/dashbusd@depth20/stxbnb@depth20/iostbnb@depth20/zrxbnb@depth20/usdctusd@depth20/zecbnb@depth20/wrxbusd@depth20/mfteth@depth20/pivxeth@depth20/etcbnb@depth20/'
+                          'wanbnb@depth20/icxeth@depth20/databusd@depth20/grseth@depth20/eospax@depth20/xrptry@depth20/wtcbnb@depth20/wavesusdc@depth20/gvteth@depth20/stratbusd@depth20/iotabnb@depth20/steembnb@depth20/steemeth@depth20/'
+                          'icxbnb@depth20/kmdeth@depth20/rlcbnb@depth20/neotusd@depth20/xzceth@depth20/troybnb@depth20/oneusdc@depth20/storjeth@depth20/fetbnb@depth20/ftmbnb@depth20/beambnb@depth20/arneth@depth20/btczar@depth20/'
+                          'ctsibusd@depth20/hivebnb@depth20/stptbnb@depth20/hceth@depth20/aionbnb@depth20/ethtry@depth20/mftbnb@depth20/dashbnb@depth20/neousdc@depth20/xrprub@depth20/gxseth@depth20/cocosbnb@depth20/cvceth@depth20/'
+                          'xrpeur@depth20/icxbusd@depth20/bttpax@depth20/cosbnb@depth20/ncasheth@depth20/gtoeth@depth20/tnteth@depth20/ltobnb@depth20/aionbusd@depth20/enjbnb@depth20/btsbusd@depth20/aeeth@depth20/xzcbnb@depth20/renbnb@depth20/'
+                          'wavesbnb@depth20/wavesbusd@depth20/usdtzar@depth20/usdsusdt@depth20/algopax@depth20/gtobnb@depth20/mtleth@depth20/xemeth@depth20/osteth@depth20/bnbeur@depth20/busdrub@depth20/bnbrub@depth20',
+
                'binanceus': 'btcusd@trade/adausd@trade/zilusd@trade/vetusd@trade/usdtusd@trade/ethusd@trade/btcusdt@trade/linkusd@trade/xrpusd@trade/btcbusd@trade/nanousd@trade/enjusd@trade/vetusdt@trade/' \
                             'hbarusd@trade/adausdt@trade/algousd@trade/xtzusd@trade/rvnusd@trade/bnbusd@trade/busdusd@trade/ethusdt@trade/adabtc@trade/zilbusd@trade/icxusd@trade/zrxusd@trade/xlmusd@trade/' \
                             'ethbtc@trade/maticusd@trade/iotausd@trade/zecusd@trade/atomusd@trade/xrpusdt@trade/bchusd@trade/bnbusdt@trade/repusd@trade/ltcusd@trade/ontusd@trade/neousd@trade/xlmusdt@trade/' \
                             'ltcusdt@trade/batusd@trade/bnbbusd@trade/xrpbtc@trade/bnbbtc@trade/wavesusd@trade/etcusd@trade/xtzbtc@trade/omgusd@trade/neousdt@trade/ethbusd@trade/ontusdt@trade/xrpbusd@trade/' \
                             'hbarbusd@trade/bchusdt@trade/dogeusdt@trade/atomusdt@trade/zrxusdt@trade/ltcbtc@trade/dashusd@trade/qtumusd@trade/algobusd@trade/xtzbusd@trade/batusdt@trade/etcusdt@trade/' \
                             'maticbusd@trade/bchbtc@trade/repbusd@trade/qtumusdt@trade',
+
+               'binanceusOB': 'btcusd@depth20/adausd@depth20/zilusd@depth20/vetusd@depth20/usdtusd@depth20/ethusd@depth20/btcusdt@depth20/linkusd@depth20/xrpusd@depth20/btcbusd@depth20/nanousd@depth20/enjusd@depth20/vetusdt@depth20/' \
+                            'hbarusd@depth20/adausdt@depth20/algousd@depth20/xtzusd@depth20/rvnusd@depth20/bnbusd@depth20/busdusd@depth20/ethusdt@depth20/adabtc@depth20/zilbusd@depth20/icxusd@depth20/zrxusd@depth20/xlmusd@depth20/' \
+                            'ethbtc@depth20/maticusd@depth20/iotausd@depth20/zecusd@depth20/atomusd@depth20/xrpusdt@depth20/bchusd@depth20/bnbusdt@depth20/repusd@depth20/ltcusd@depth20/ontusd@depth20/neousd@depth20/xlmusdt@depth20/' \
+                            'ltcusdt@depth20/batusd@depth20/bnbbusd@depth20/xrpbtc@depth20/bnbbtc@depth20/wavesusd@depth20/etcusd@depth20/xtzbtc@depth20/omgusd@depth20/neousdt@depth20/ethbusd@depth20/ontusdt@depth20/xrpbusd@depth20/' \
+                            'hbarbusd@depth20/bchusdt@depth20/dogeusdt@depth20/atomusdt@depth20/zrxusdt@depth20/ltcbtc@depth20/dashusd@depth20/qtumusd@depth20/algobusd@depth20/xtzbusd@depth20/batusdt@depth20/etcusdt@depth20/' \
+                            'maticbusd@depth20/bchbtc@depth20/repbusd@depth20/qtumusdt@depth20',
 
                'bitfinex': ['BTCUSD', 'ETHUSD', 'BTCUSDt', 'USDtUSD', 'BTCEUR', 'XRPUSD', 'BABUSD', 'EOSUSD', 'ETHEUR', 'LTCUSD', 'BTCGBP', 'ETHBTC', 'BTCJPY', 'XTZUSD', 'BSVBTC', 'ZECUSD',
                             'DGBBTC', 'NEOUSD', 'ETHJPY', 'BABBTC', 'XAUTUSD', 'IOTABTC', 'LTCBTC', 'RBTBTC', 'IOTAUSD', 'XRPBTC', 'XMRUSD', 'TRXUSD', 'BSVUSD', 'ALGOUSD', 'IQXUSD', 'QTUMBTC', 'EOSBTC',
@@ -133,6 +185,8 @@ instruments = {'bibox': ['BTC_USDT', 'ETH_USDT', 'BCH_USDT', 'XRP_USDT', 'LTC_US
                         'acdcusdt', 'kinusdt', 'crediteth', 'mbeth', 'plcusdt', 'platusdt', 'nobseth', 'plcbtc', 'dacceth', 'toscbtc', 'mbbtc'],
 
                'bitmex': 'trade:XBTUSD,trade:ETHUSD,trade:XRPUSD',
+
+               'bitmexOB': 'orderBook:XBTUSD,orderBook:ETHUSD,orderBook:XRPUSD',
 
                'bitstamp': ['btcusd', 'xrpusd', 'btceur', 'ethusd', 'etheur', 'bchusd', 'ltcusd', 'xrpeur', 'btcgbp', 'ethbtc', 'bcheur', 'xlmbtc', 'ltceur', 'xlmeur', 'xrpbtc', 'ltcbtc', 'bchbtc', 'xlmusd',
                             'ethgbp', 'xrpgbp', 'ltcgbp', 'xlmgbp', 'paxusd', 'bchgbp', 'btcpax', 'ethpax', 'paxeur', 'paxgbp', 'xrppax'],
