@@ -184,9 +184,9 @@ instruments = {'bibox': ['BTC_USDT', 'ETH_USDT', 'BCH_USDT', 'XRP_USDT', 'LTC_US
                         'mireth', 'ubexusdt', 'zeleth', 'ctxcusdt', 'nobsusdt', 'bloodbtc', 'dwsusdt', 'creditusdt', 'dwseth', 'wikenbtc', 'dxteth', 'e2cbtc', 'cloeth', 'mirusdt', 'crnusdt', 'e2cusdt', 'imtusdt',
                         'acdcusdt', 'kinusdt', 'crediteth', 'mbeth', 'plcusdt', 'platusdt', 'nobseth', 'plcbtc', 'dacceth', 'toscbtc', 'mbbtc'],
 
-               'bitmex': 'trade:XBTUSD,trade:ETHUSD,trade:XRPUSD',
+               'bitmex': 'trade:XBTUSD,trade:ETHUSD,trade:XRPUSD,trade:LTCUSD,trade:BCHUSD',
 
-               'bitmexOB': 'orderBook:XBTUSD,orderBook:ETHUSD,orderBook:XRPUSD',
+               'bitmexOB': 'orderBookL2_25:XBTUSD,orderBookL2_25:ETHUSD,orderBookL2_25:XRPUSD,orderBookL2_25:LTCUSD,orderBookL2_25:BCHUSD',
 
                'bitstamp': ['btcusd', 'xrpusd', 'btceur', 'ethusd', 'etheur', 'bchusd', 'ltcusd', 'xrpeur', 'btcgbp', 'ethbtc', 'bcheur', 'xlmbtc', 'ltceur', 'xlmeur', 'xrpbtc', 'ltcbtc', 'bchbtc', 'xlmusd',
                             'ethgbp', 'xrpgbp', 'ltcgbp', 'xlmgbp', 'paxusd', 'bchgbp', 'btcpax', 'ethpax', 'paxeur', 'paxgbp', 'xrppax'],

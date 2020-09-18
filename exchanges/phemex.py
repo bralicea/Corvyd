@@ -26,8 +26,7 @@ class Phemex(base.Base):
         heartbeat.start(5)
 
     def onMessage(self, payload, isBinary):
-        print(payload)
-        #self.producer.send('phemexTrades', payload)
+        self.producer.send('phemexTrades', payload)
 
 
 base.createConnection("wss://phemex.com/ws", 443, Phemex)

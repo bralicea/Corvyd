@@ -89,10 +89,8 @@ async def biboxtrades(msgs):
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)
@@ -186,10 +184,8 @@ async def binanceustrades(msgs):
             "pair": pair,
             "direction": direction,
             "time": ts,
-            "fields": {
-                "amount": amount,
-                "price": price
-            }
+            "amount": amount,
+            "price": price
         }
 
         await trades.send(value=json_body)
@@ -233,10 +229,8 @@ async def bikitrades(msgs):
                 "pair": pair,
                 "direction": direction,
                 "time": ts,
-                "fields": {
-                    "amount": amount,
-                    "price": price
-                }
+                "amount": amount,
+                "price": price
             }
 
             await trades.send(value=json_body)
@@ -309,10 +303,8 @@ async def bitfinextrades(msgs):
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)
@@ -320,6 +312,7 @@ async def bitfinextrades(msgs):
         except:
             pass
 
+# DISABLED BITFINEX
 @app.agent(bitfinexOrderBooks)
 async def bitfinexorderbooks(msgs):
     # Bitfinex generates new pair IDs every connection
@@ -354,12 +347,14 @@ async def bitfinexorderbooks(msgs):
                             bid = {'price': price, 'amount': amount}
                             OB[bitfinexOBId[msg[0]]]['bids'].append(bid)
                             OB[bitfinexOBId[msg[0]]]['time'] = time.time_ns() // 1000000
+                            break
 
                         elif data[1] == 0:
                             for count, bid in enumerate(OB[bitfinexOBId[msg[0]]]['bids']):
                                 if bid['price'] == data[0]:
                                     del OB[bitfinexOBId[msg[0]]]['bids'][count]
                                     OB[bitfinexOBId[msg[0]]]['time'] = time.time_ns() // 1000000
+                                    break
 
                     # Add to asks
                     else:
@@ -368,11 +363,13 @@ async def bitfinexorderbooks(msgs):
                             amount = abs(float(data[2]))
                             bid = {'price': price, 'amount': amount}
                             OB[bitfinexOBId[msg[0]]]['asks'].append(bid)
+                            break
 
                         elif data[1] == 0:
                             for count, bid in enumerate(OB[bitfinexOBId[msg[0]]]['asks']):
                                 if bid['price'] == data[0]:
                                     del OB[bitfinexOBId[msg[0]]]['asks'][count]
+                                    break
 
                 await orderbooks.send(value=OB[bitfinexOBId[msg[0]]])
 
@@ -392,6 +389,7 @@ async def bitfinexorderbooks(msgs):
                             if bid['price'] == msg[1][0]:
                                 del OB[bitfinexOBId[msg[0]]]['bids'][count]
                                 OB[bitfinexOBId[msg[0]]]['time'] = time.time_ns() // 1000000
+                                break
 
                 # Add to asks
                 else:
@@ -405,6 +403,7 @@ async def bitfinexorderbooks(msgs):
                         for count, bid in enumerate(OB[bitfinexOBId[msg[0]]]['asks']):
                             if bid['price'] == msg[1][0]:
                                 del OB[bitfinexOBId[msg[0]]]['asks'][count]
+                                break
 
                 await orderbooks.send(value=OB[bitfinexOBId[msg[0]]])
 
@@ -429,10 +428,8 @@ async def bitflyertrades(msgs):
                 "pair": pair,
                 "direction": direction,
                 "time": ts,
-                "fields": {
-                    "amount": amount,
-                    "price": price
-                }
+                "amount": amount,
+                "price": price
             }
 
             await trades.send(value=json_body)
@@ -478,10 +475,8 @@ async def bitforextrades(msgs):
             "pair": pair,
             "direction": direction,
             "time": ts,
-            "fields": {
-                "amount": amount,
-                "price": price
-            }
+            "amount": amount,
+            "price": price
         }
 
         await trades.send(value=json_body)
@@ -533,42 +528,94 @@ async def bitmextrades(msgs):
                 "pair": pair,
                 "direction": direction,
                 "time": ts,
-                "fields": {
-                    "amount": amount,
-                    "price": price
-                }
+                "amount": amount,
+                "price": price
             }
 
             await trades.send(value=json_body)
 
+# DISABLED BITMEX
+OB = {}
+OBid = {}
 @app.agent(bitmexOrderBooks)
 async def bitmexorderbooks(msgs):
     async for msg in msgs:
-        if 'data' in msg:
-            msg = msg['data'][0]
-            exchange = 'bitmex'
-            if 'XBT' in msg['symbol']:
-                pair = msg['symbol'].replace('XBT', 'btc').lower()
-            else:
-                pair = msg['symbol']
-            amount = float(msg['size'])
-            price = float(msg['price'])
-            direction = normalizeDirectionField[msg['side'].lower()]
-            dt = datetime.strptime(msg['timestamp'].split('.')[0], "%Y-%m-%dT%H:%M:%S")
-            ts = int((dt - datetime.utcfromtimestamp(0)).total_seconds()) * 1000
+        try:
+            if 'action' in msg:
+                if msg['action'] == 'partial':
+                    OB[msg["filter"]["symbol"]] = {"exchange": "bitmex", "pair": msg["filter"]["symbol"].lower(), "time": time.time_ns() // 1000000, "bids": [], "asks": []}
+                    for entry in msg['data']:
+                        OBid["id"] = entry["price"]
+                        if entry['side'] == 'Buy':
+                            OB[msg["filter"]["symbol"]]['bids'].append({'price': float(entry['price']), 'amount': float(entry['size'])})
 
-            json_body = {
-                "exchange": exchange,
-                "pair": pair,
-                "direction": direction,
-                "time": ts,
-                "fields": {
-                    "amount": amount,
-                    "price": price
-                }
-            }
+                        elif entry['side'] == 'Sell':
+                            OB[msg["filter"]["symbol"]]['asks'].append({'price': float(entry['price']), 'amount': float(entry['size'])})
 
-            await orderbooks.send(value=json_body)
+                    OB[msg["filter"]["symbol"]]['asks'] = OB[msg["filter"]["symbol"]]['asks'][::-1]
+
+                    await orderbooks.send(value=OB[msg['filter']['symbol']])
+
+                elif msg['action'] == 'update':
+                    for entry in msg['data']:
+                        if entry['side'] == 'Sell':
+                            for count, ask in enumerate(OB[entry['symbol']]['asks']):
+                                if ask['price'] == OBid[entry['id']]:
+                                    OB[entry['symbol']]['asks'][count]['amount'] = float(entry['size'])
+                                    OB[entry['symbol']]['time'] = time.time_ns() // 1000000
+                                    break
+
+                        elif entry['side'] == 'Buy':
+                            for count, bid in enumerate(OB[entry['symbol']]['bids']):
+                                if bid['price'] == OBid[entry['id']]:
+                                    OB[entry['symbol']]['bids'][count]['amount'] = float(entry['size'])
+                                    OB[entry['symbol']]['time'] = time.time_ns() // 1000000
+                                    break
+
+                    await orderbooks.send(value=OB[msg['data'][0]['symbol']])
+
+                elif msg['action'] == 'insert':
+                    for entry in msg['data']:
+                        OBid[entry['id']] = entry['price']
+                        if entry['side'] == 'Sell':
+                            for cnt, ask in enumerate(OB[entry['symbol']]['asks']):
+                                if float(entry['price']) < ask['price']:
+                                    OB[entry['symbol']]['asks'].insert(cnt, {'price': float(entry['price']), 'amount': float(entry['size'])})
+                                    OB[entry['symbol']]['time'] = time.time_ns() // 1000000
+                                    break
+
+                        elif entry['side'] == 'Buy':
+                            for cnt, bid in enumerate(OB[entry['symbol']]['bids']):
+                                if float(entry['price']) < bid['price']:
+                                    OB[entry['symbol']]['bids'].insert(cnt, {'price': float(entry['price']), 'amount': float(entry['size'])})
+                                    OB[entry['symbol']]['time'] = time.time_ns() // 1000000
+                                    break
+
+                    await orderbooks.send(value=OB[msg['data'][0]['symbol']])
+
+                elif msg['action'] == 'delete':
+                    for entry in msg['data']:
+                        if entry['id'] in OBid:
+                            if entry['side'] == 'Sell':
+                                for count, ask in enumerate(OB[entry['symbol']]['asks']):
+                                    if ask['price'] == OBid[entry['id']]:
+                                        del OB[entry['symbol']]['asks'][count]
+                                        del OBid[entry['id']]
+                                        OB[entry['symbol']]['time'] = time.time_ns() // 1000000
+                                        break
+
+                            elif entry['side'] == 'Buy':
+                                for count, bid in enumerate(OB[entry['symbol']]['bids']):
+                                    if bid['price'] == OBid[entry['id']]:
+                                        del OB[entry['symbol']]['bids'][count]
+                                        del OBid[entry['id']]
+                                        OB[entry['symbol']]['time'] = time.time_ns() // 1000000
+                                        break
+
+                    await orderbooks.send(value=OB[msg['data'][0]['symbol']])
+
+        except:
+            pass
 
 @app.agent(bitstampTrades)
 async def bitstamptrades(msgs):
@@ -589,10 +636,8 @@ async def bitstamptrades(msgs):
                 "pair": pair,
                 "direction": direction,
                 "time": ts,
-                "fields": {
-                    "amount": amount,
-                    "price": price
-                }
+                "amount": amount,
+                "price": price
             }
 
             await trades.send(value=json_body)
@@ -617,10 +662,8 @@ async def bittrextrades(msgs):
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)
@@ -642,10 +685,8 @@ async def coinextrades(msgs):
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)
@@ -667,10 +708,8 @@ async def coinbasetrades(msgs):
                 "pair": pair,
                 "direction": direction,
                 "time": ts,
-                "fields": {
-                    "amount": amount,
-                    "price": price
-                }
+                "amount": amount,
+                "price": price
             }
 
             await trades.send(value=json_body)
@@ -693,10 +732,8 @@ async def gatetrades(msgs):
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)
@@ -718,10 +755,8 @@ async def geminitrades(msgs):
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)
@@ -744,10 +779,8 @@ async def hitbtctrades(msgs):
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)
@@ -770,10 +803,8 @@ async def huobitrades(msgs):
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)
@@ -797,10 +828,8 @@ async def krakentrades(msgs):
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)
@@ -822,10 +851,8 @@ async def kucointrades(msgs):
                 "pair": pair,
                 "direction": direction,
                 "time": ts,
-                "fields": {
-                    "amount": amount,
-                    "price": price
-                }
+                "amount": amount,
+                "price": price
             }
 
             await trades.send(value=json_body)
@@ -850,10 +877,8 @@ async def okextrades(msgs):
                 "pair": pair,
                 "direction": direction,
                 "time": ts,
-                "fields": {
-                    "amount": amount,
-                    "price": price
-                }
+                "amount": amount,
+                "price": price
             }
 
             await trades.send(value=json_body)
@@ -869,17 +894,15 @@ async def phemextrades(msgs):
                 amount = data[3]
                 price = data[2]
                 direction = data[1].lower()
-                ts = data[0]
+                ts = data[0] // 1000000
 
                 json_body = {
                     "exchange": exchange,
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)
@@ -903,10 +926,8 @@ async def poloniextrades(msgs):
                         "pair": pair,
                         "direction": direction,
                         "time": ts,
-                        "fields": {
-                            "amount": amount,
-                            "price": price
-                        }
+                        "amount": amount,
+                        "price": price
                     }
 
                     await trades.send(value=json_body)
@@ -928,10 +949,8 @@ async def zbtrades(msgs):
                     "pair": pair,
                     "direction": direction,
                     "time": ts,
-                    "fields": {
-                        "amount": amount,
-                        "price": price
-                    }
+                    "amount": amount,
+                    "price": price
                 }
 
                 await trades.send(value=json_body)

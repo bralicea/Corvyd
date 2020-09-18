@@ -49,7 +49,8 @@ class BitfinexOB(Bitfinex):
             params = {
                 'event': 'subscribe',
                 'channel': 'book',
-                'symbol': 't{}'.format(instrument)
+                'symbol': 't{}'.format(instrument),
+                'length': '25'
             }
             subscription = base.json.dumps(params)
             self.sendMessage(subscription.encode('utf8'))
@@ -98,3 +99,4 @@ base.createConnection("wss://api.bitfinex.com/ws/2", 443, BitfinexOB140)
 base.createConnection("wss://api.bitfinex.com/ws/2", 443, BitfinexOB175)
 base.createConnection("wss://api.bitfinex.com/ws/2", 443, BitfinexOB210)
 base.createConnection("wss://api.bitfinex.com/ws/2", 443, BitfinexOB245)
+
