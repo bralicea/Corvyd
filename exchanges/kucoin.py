@@ -1,3 +1,4 @@
+# https://docs.kucoin.com/
 import base
 
 
@@ -50,6 +51,7 @@ class Kucoin400(Kucoin):
 
 # Request token to establish websocket connection
 getToken = base.json.loads((base.requests.post('https://api.kucoin.com/api/v1/bullet-public').content).decode('utf-8'))
+
 base.createConnection("wss://push-private.kucoin.com/endpoint?token={}".format(getToken['data']['token']), 443, Kucoin)
 base.createConnection("wss://push-private.kucoin.com/endpoint?token={}".format(getToken['data']['token']), 443, Kucoin100)
 base.createConnection("wss://push-private.kucoin.com/endpoint?token={}".format(getToken['data']['token']), 443, Kucoin200)

@@ -15,4 +15,3 @@ class BitmexOB(Bitmex):
 
 base.createConnection("wss://www.bitmex.com/realtime?subscribe={}".format(base.instruments.instruments['bitmex']), 443, Bitmex)
 base.createConnection("wss://www.bitmex.com/realtime?subscribe={}".format(base.instruments.instruments['bitmexOB']), 443, BitmexOB)
-

@@ -1,20 +1,21 @@
+# https://docs.gemini.com/websocket-api/
 import base
+import instruments
 
 
-class GeminiBTC(base.Base):
+class Gemini(base.Base):
 
-    def onMessage(self, payload, isBinary):
-        payload = base.json.loads(payload.decode('utf-8'))
-        payload["pair"] = 'btcusd'
-        self.producer.send('geminiTrades', base.json.dumps(payload).encode('utf-8'))
-
-class GeminiETH(GeminiBTC):
+    def onOpen(self):
+        params = '{"type": "subscribe","subscriptions":[{"name":"l2","symbols":' + (instruments.instruments['gemini']) + '}]}'
+        self.sendMessage(params.encode('utf8'))
 
     def onMessage(self, payload, isBinary):
-        payload = base.json.loads(payload.decode('utf-8'))
-        payload["pair"] = 'ethusd'
-        self.producer.send('geminiTrades', base.json.dumps(payload).encode('utf-8'))
+        msg = base.json.loads(payload.decode('utf-8'))
+        if msg['type'] == 'trade':
+            self.producer.send('geminiTrades', base.json.dumps(msg).encode('utf-8'))
+
+        elif msg['type'] == 'l2_updates':
+            self.producer.send('geminiOrderBooks', base.json.dumps(msg).encode('utf-8'))
 
 
-base.createConnection("wss://api.gemini.com/v1/marketdata/btcusd?trades=true", 443, GeminiBTC)
-base.createConnection("wss://api.gemini.com/v1/marketdata/ethusd?trades=true", 443, GeminiETH)
+base.createConnection("wss://api.gemini.com/v2/marketdata", 443, Gemini)

@@ -34,3 +34,4 @@ class BiboxOB(base.Base):
 
 base.createConnection("wss://push.bibox.com/", 443, Bibox)
 base.createConnection("wss://push.bibox.com/", 443, BiboxOB)
+

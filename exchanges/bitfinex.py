@@ -16,7 +16,12 @@ class Bitfinex(base.Base):
             self.sendMessage(subscription.encode('utf8'))
 
     def onMessage(self, payload, isBinary):
-        self.producer.send('bitfinexTrades', payload)
+        msg = base.json.loads(payload.decode('utf-8'))
+        if isinstance(msg, dict):
+            self.producer.send('bitfinexTrades', payload)
+
+        elif isinstance(msg, list) and msg[1] != 'hb':
+            self.producer.send('bitfinexTrades', payload)
 
 
 class Bitfinex35(Bitfinex):

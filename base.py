@@ -54,5 +54,6 @@ def createConnection(streamName, port, exchange): # Create a Twisted factory
     hostName = urlparse(streamName).hostname
     factory = Connect(streamName)
     factory.setProtocolOptions(autoPingInterval=60)
+    factory.setProtocolOptions(openHandshakeTimeout=60)
     factory.protocol = exchange
     reactor.connectSSL(hostName, port, factory, ssl.optionsForClientTLS(hostName))

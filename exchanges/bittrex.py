@@ -64,7 +64,6 @@ async def on_message(msg):
 
 async def on_private(msg):
     decoded_msg = await process_message(msg[0])
-    print(decoded_msg)
 
 
 # Create connection
